@@ -10,20 +10,21 @@ public class MowerMap extends Lawn{
 
     public void initialMap(int width, int length){
         for(int i = 0; i < width; i++){
-            for(int j = 0; j < length; j++)
+            for(int j = 0; j < length; j++){
                 squares[i][j] = "unkown";
+            }
         }
     }
 
     //TODO: set square state for the one in mowerMap
     public void setSquare(Location loc, SquareState sqState, Direction d){
-        square[loc[0]][loc[1]] = "grass";
+        square[loc[0]][loc[1]] = "empty";
     }
 
     //TODO: determine if all the grasses has been cut
     // What is the logic here???
-    public Boolean isCompleted(){
-        int grassremain = remainGrassNumber();
+    public Boolean isCompleted(MowerMap map){
+        int grassremain = map.remainGrassNumber();
         Boolean isCompleted = false;
         if(grassremain == 0){
             isCompleted = true
