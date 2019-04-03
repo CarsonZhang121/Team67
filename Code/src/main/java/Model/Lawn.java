@@ -3,18 +3,28 @@ package Model;
 import Viewer.SquareState;
 
 public class Lawn {
-    protected SquareState[] squares;
+    protected SquareState[][] squares;
+    private int grassCut = 0;
+    private int grassRemain = 0;
 
     // Would it be better to use variables to record (1) the # of grass cut and
     // (2) the # of grass left
 
-    // TODO: # of grass cut
-    public int cutGrassNumber(){
-        return 0;
+    public int getGrassCut(){
+        return this.grassCut;
     }
 
-    // TODO: # of grass left
-    public int remainGrassNumber(){
-        return 0;
+    public int getGrassRemain(){
+        return this.grassRemain;
+    }
+
+    // update the grass state only when the grass is cut
+    public void updateGrassNum(){
+        this.grassCut += 1;
+        this.grassRemain -= 1;
+    }
+
+    public void setGrassRemain(int grassRemain) {
+        this.grassRemain = grassRemain;
     }
 }
