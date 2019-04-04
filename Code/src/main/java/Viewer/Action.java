@@ -9,4 +9,12 @@ public class Action {
     public void setMoveAction(int stepSize, Direction d){
 
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
