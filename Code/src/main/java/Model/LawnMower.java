@@ -5,6 +5,8 @@ import Viewer.Direction;
 import Viewer.Location;
 import Viewer.MowerStatus;
 
+import java.util.Arrays;
+
 
 public class LawnMower {
     private MowerStatus currentStatus;
@@ -17,26 +19,28 @@ public class LawnMower {
     // TODO: get the next action of the mower
     public Action nextAction(MowerMap map){
 
-        String[] neighbors = new String[8]
-        neighbors[0] = map[currentLoc[0]][currentLoc[1] + 1];
-        neighbors[1] = map[currentLoc[0] + 1][currentLoc[1] + 1];
-        neighbors[2] = map[currentLoc[0] + 1][currentLoc[1]];
-        neighbors[3] = map[currentLoc[0] + 1][currentLoc[1] - 1];
-        neighbors[4] = map[currentLoc[0]][currentLoc[1] - 1];
-        neighbors[5] = map[currentLoc[0] - 1][currentLoc[1] - 1];
-        neighbors[6] = map[currentLoc[0] - 1][currentLoc[1]];
-        neighbors[7] = map[currentLoc[0] - 1][currentLoc[1] + 1];
+        String[] neighbors = new String[8];
+        int x = currentLoc.getX();
+        int y = currentLoc.getY();
+        neighbors[0] = map.squares[x][y + 1].name();
+        neighbors[1] = map.squares[x + 1][y + 1].name();
+        neighbors[2] = map.squares[x + 1][y].name();
+        neighbors[3] = map.squares[x + 1][y - 1].name();
+        neighbors[4] = map.squares[x][y - 1].name();
+        neighbors[5] = map.squares[x - 1][y - 1].name();
+        neighbors[6] = map.squares[x - 1][y].name();
+        neighbors[7] = map.squares[x - 1][y + 1].name();
 
-        if(ArrayUtils.contains(neighbors, "unkown" )){
-            cacheAction = Scan;
+        if(Arrays.asList(neighbors).contains("unkown")){
+            cacheAction.setName("unknown");
         }
-        elif(map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "grass" && map[currentloc[0] + 2 * currentDirection[0]][currentloc[1] + 2 * currentDirection[1]] == "grass"){
+        else if(map[x + 1 * currentDirection[0]][y + 1 * currentDirection[1]] == "grass" && map[x + 2 * currentDirection[0]][y + 2 * currentDirection[1]] == "grass"){
             cacheAction = [move, 2, direction = currentDirection];
         }
-        elif(map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "grass"){
+        else if(map[x + 1 * currentDirection[0]][y + 1 * currentDirection[1]] == "grass"){
             cacheAction = [move, 1, direction = currentDirection];
         }
-        elif(map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "crater" || map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "puppy" || map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "fence"){
+        else if(map[x + 1 * currentDirection[0]][y + 1 * currentDirection[1]] == "crater" || map[x + 1 * currentDirection[0]][y + 1 * currentDirection[1]] == "puppy" || map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "fence"){
             cacheAction = [move, 0, direction = currentDirection.next];
         }
         return null;
