@@ -1,11 +1,7 @@
 package Model;
 
-import Viewer.Action;
-import Viewer.Direction;
-import Viewer.Location;
-import Viewer.MowerStatus;
-
-import java.util.Arrays;
+import Viewer.*;
+import com.sun.tools.javac.util.ArrayUtils;
 
 
 public class LawnMower {
@@ -17,30 +13,36 @@ public class LawnMower {
 
 
     // TODO: get the next action of the mower
-    public Action nextAction(MowerMap map){
+    public Action nextAction(MowerMap map, Location currentLoc){
 
-        String[] neighbors = new String[8];
-        int x = currentLoc.getX();
-        int y = currentLoc.getY();
-        neighbors[0] = map.squares[x][y + 1].name();
-        neighbors[1] = map.squares[x + 1][y + 1].name();
-        neighbors[2] = map.squares[x + 1][y].name();
-        neighbors[3] = map.squares[x + 1][y - 1].name();
-        neighbors[4] = map.squares[x][y - 1].name();
-        neighbors[5] = map.squares[x - 1][y - 1].name();
-        neighbors[6] = map.squares[x - 1][y].name();
-        neighbors[7] = map.squares[x - 1][y + 1].name();
+        SquareState[] neighbors = new SquareState[8];
+        neighbors[0] = map[currentLoc.getX()][currentLoc.getY() + 1];
+        neighbors[1] = map[currentLoc.getX() + 1][currentLoc.getY() + 1];
+        neighbors[2] = map[currentLoc.getX() + 1][currentLoc.getY()];
+        neighbors[3] = map[currentLoc.getX() + 1][currentLoc.getY() - 1];
+        neighbors[4] = map[currentLoc.getX()][currentLoc.getY() - 1];
+        neighbors[5] = map[currentLoc.getX() - 1][currentLoc.getY() - 1];
+        neighbors[6] = map[currentLoc.getX() - 1][currentLoc.getY()];
+        neighbors[7] = map[currentLoc.getX() - 1][currentLoc.getY() + 1];
 
-        if(Arrays.asList(neighbors).contains("unkown")){
-            cacheAction.setName("unknown");
+        boolean isunkown = false;
+        for(SquareState a : neighbors){
+            if(a == SquareState.unknown){
+                isunkown = true;
+                break;
+            }
         }
-        else if(map[x + 1 * currentDirection[0]][y + 1 * currentDirection[1]] == "grass" && map[x + 2 * currentDirection[0]][y + 2 * currentDirection[1]] == "grass"){
+
+        if(isunkown == true )){
+            cacheAction = Scan;
+        }
+        else if(map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "grass" && map[currentloc[0] + 2 * currentDirection[0]][currentloc[1] + 2 * currentDirection[1]] == "grass"){
             cacheAction = [move, 2, direction = currentDirection];
         }
-        else if(map[x + 1 * currentDirection[0]][y + 1 * currentDirection[1]] == "grass"){
+        else if(map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "grass"){
             cacheAction = [move, 1, direction = currentDirection];
         }
-        else if(map[x + 1 * currentDirection[0]][y + 1 * currentDirection[1]] == "crater" || map[x + 1 * currentDirection[0]][y + 1 * currentDirection[1]] == "puppy" || map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "fence"){
+        else if(map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "crater" || map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "puppy" || map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "fence"){
             cacheAction = [move, 0, direction = currentDirection.next];
         }
         return null;
@@ -65,18 +67,18 @@ public class LawnMower {
     }
 
     // TODO: set status
-    public void setStatus(MowerMap map, String s){
+    public void setStatus(MowerMap map, Location currentLoc, String s){
         if(map.remainGrassNumber() == 0){
-            currentStatus = "turned_off";
+            currentStatus = MowerStatus.turnedOff;
         }
-        elif(map[currentLoc[0]][currentLoc[1]] == "crater" || map[currentLoc[0]][currentLoc[1]] == "fence"){
-            currentStatus = "crashed";
+        else if(map[currentLoc.getX()][currentLoc.getY()] == SquareState.crater || map[currentLoc.getX()][currentLoc.getY()] == SquareState.fence){
+            currentStatus = MowerStatus.crashed;
         }
-        elif(map[currentLoc[0]][currentLoc[1]] == "puppy_mower"){
-            currentStatus = "stalled";
+        else if(map[currentLoc.getX()][currentLoc.getY()] == SquareState.puppy_mower){
+            currentStatus = MowerStatus.stalled;
         }
         else{
-            currentStatus = "active";
+            currentStatus = MowerStatus.active;
         }
     }
 
