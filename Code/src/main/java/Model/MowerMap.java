@@ -8,6 +8,7 @@ public class MowerMap extends Lawn{
     private int width = 60;
     private int length = 40;
     SquareState[][] map;
+    int remainGrassNumber = 0;
 
 
     public void initialMap(int width, int length){
@@ -27,6 +28,17 @@ public class MowerMap extends Lawn{
 
     //TODO: determine if all the grasses has been cut
     // What is the logic here???
+    public int remainGrassNumber(){
+        for(SquareState[] a : map){
+            for(SquareState b: a) {
+                if (b == SquareState.grass) {
+                    remainGrassNumber++;
+                }
+            }
+        }
+        return remainGrassNumber;
+    }
+
     public Boolean isCompleted(MowerMap map){
         int grassremain = map.remainGrassNumber();
         Boolean isCompleted = false;
