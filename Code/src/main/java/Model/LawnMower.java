@@ -2,6 +2,7 @@ package Model;
 
 import Viewer.*;
 import com.sun.tools.javac.util.ArrayUtils;
+import sun.java2d.xr.DirtyRegion;
 
 
 public class LawnMower {
@@ -13,71 +14,134 @@ public class LawnMower {
 
 
     // TODO: get the next action of the mower
-    public Action nextAction(MowerMap map, Location currentLoc){
+    public Action nextAction(MowerMap map, Location currentLoc) {
 
         SquareState[] neighbors = new SquareState[8];
-        neighbors[0] = map[currentLoc.getX()][currentLoc.getY() + 1];
-        neighbors[1] = map[currentLoc.getX() + 1][currentLoc.getY() + 1];
-        neighbors[2] = map[currentLoc.getX() + 1][currentLoc.getY()];
-        neighbors[3] = map[currentLoc.getX() + 1][currentLoc.getY() - 1];
-        neighbors[4] = map[currentLoc.getX()][currentLoc.getY() - 1];
-        neighbors[5] = map[currentLoc.getX() - 1][currentLoc.getY() - 1];
-        neighbors[6] = map[currentLoc.getX() - 1][currentLoc.getY()];
-        neighbors[7] = map[currentLoc.getX() - 1][currentLoc.getY() + 1];
+        neighbors[0] = map.map[currentLoc.getX()][currentLoc.getY() + 1];
+        neighbors[1] = map.map[currentLoc.getX() + 1][currentLoc.getY() + 1];
+        neighbors[2] = map.map[currentLoc.getX() + 1][currentLoc.getY()];
+        neighbors[3] = map.map[currentLoc.getX() + 1][currentLoc.getY() - 1];
+        neighbors[4] = map.map[currentLoc.getX()][currentLoc.getY() - 1];
+        neighbors[5] = map.map[currentLoc.getX() - 1][currentLoc.getY() - 1];
+        neighbors[6] = map.map[currentLoc.getX() - 1][currentLoc.getY()];
+        neighbors[7] = map.map[currentLoc.getX() - 1][currentLoc.getY() + 1];
 
-        boolean isunkown = false;
-        for(SquareState a : neighbors){
-            if(a == SquareState.unknown){
-                isunkown = true;
+        boolean isUnkown = false;
+        for (SquareState a : neighbors) {
+            if (a == SquareState.unknown) {
+                isUnkown = true;
                 break;
             }
         }
 
-        if(isunkown == true )){
-            cacheAction = Scan;
+        int[] newLoc = new int[2];
+        newLoc[0] = currentLoc.getX() + getXY(currentDirection)[0];
+        newLoc[1] = currentLoc.getY() + getXY(currentDirection)[1];
+
+        if (isUnkown){
+            scan(map, currentLoc);
         }
-        else if(map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "grass" && map[currentloc[0] + 2 * currentDirection[0]][currentloc[1] + 2 * currentDirection[1]] == "grass"){
-            cacheAction = [move, 2, direction = currentDirection];
+        else if (map.map[newLoc[0]][newLoc[1]] == SquareState.grass) {
+            cacheAction.setStepSize(1);
         }
-        else if(map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "grass"){
-            cacheAction = [move, 1, direction = currentDirection];
-        }
-        else if(map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "crater" || map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "puppy" || map[currentloc[0] + 1 * currentDirection[0]][currentloc[1] + 1 * currentDirection[1]] == "fence"){
-            cacheAction = [move, 0, direction = currentDirection.next];
+        else if (map.map[newLoc[0]][newLoc[1]] == SquareState.crater || map.map[newLoc[0]][newLoc[1]] == SquareState.mower || map.map[newLoc[0]][newLoc[1]] == SquareState.puppy_grass || map.map[newLoc[0]][newLoc[1]] == SquareState.puppy_empty || map.map[newLoc[0]][newLoc[1]] == SquareState.puppy_mower || map.map[newLoc[0]][newLoc[1]] == SquareState.fence) {
+            changeDirection(currentDirection);
         }
         return null;
     }
 
-    // TODO: update the mower instance
-    public void updateMower(MowerMap map, Action a, Location loc, String s){
-        if(a == Scan){
-            map.updateMapFromScan(String[] neighbors);
+    private void scan(MowerMap map, Location currentLoc) {
+
+        SquareState[] scanResult = new SquareState[8];
+        map.map[currentLoc.getX()][currentLoc.getY() + 1] = scanResult[0];
+        map.map[currentLoc.getX() + 1][currentLoc.getY() + 1] = scanResult[1];
+        map.map[currentLoc.getX() + 1][currentLoc.getY()] = scanResult[2];
+        map.map[currentLoc.getX() + 1][currentLoc.getY() - 1] = scanResult[3];
+        map.map[currentLoc.getX()][currentLoc.getY() - 1] = scanResult[4];
+        map.map[currentLoc.getX() - 1][currentLoc.getY() - 1] = scanResult[5];
+        map.map[currentLoc.getX() - 1][currentLoc.getY()] = scanResult[6];
+        map.map[currentLoc.getX() - 1][currentLoc.getY() + 1] = scanResult[7];
+    }
+
+    private void changeDirection(Direction currentDirection) {
+        if(currentDirection == Direction.North){
+            this.currentDirection = Direction.Northeast;
         }
-        elif(a == [move, 2, direction = currentDirection]){
-            currentLoc[0] = currentloc[0] + 2 * currentDirection[0];
-            currentLoc[1] = currentloc[1] + 2 * currentDirection[1];
+        else if(currentDirection == Direction.Northeast){
+            this.currentDirection = Direction.East;
         }
-        elif(a == [move, 1, direction = currentDirection]){
-            currentLoc[0] = currentloc[0] + 1 * currentDirection[0];
-            currentLoc[1] = currentloc[1] + 1 * currentDirection[1];
+        else if(currentDirection == Direction.East){
+            this.currentDirection = Direction.Southeast;
         }
-        elif(a == [move, 0, direction = currentDirection.next]){
-            currentDirection = currentDirection.next;
+        else if(currentDirection == Direction.Southeast){
+            this.currentDirection = Direction.South;
+        }
+        else if(currentDirection == Direction.South){
+            this.currentDirection = Direction.Southwest;
+        }
+        else if(currentDirection == Direction.Southwest){
+            this.currentDirection = Direction.West;
+        }
+        else if(currentDirection == Direction.West){
+            this.currentDirection = Direction.Northwest;
+        }
+        else if(currentDirection == Direction.Northwest){
+            this.currentDirection = Direction.North;
         }
     }
 
+    public int[] getXY(Direction currentDirection){
+        int[] xy = new int[2];
+        if(currentDirection == Direction.North){
+            xy[0] = 0;
+            xy[1] = 1;
+        }
+        else if(currentDirection == Direction.Northeast){
+            xy[0] = 1;
+            xy[1] = 1;
+        }
+        else if(currentDirection == Direction.East){
+            xy[0] = 1;
+            xy[1] = 0;
+        }
+        else if(currentDirection == Direction.Southeast){
+            xy[0] = 1;
+            xy[1] = -1;
+        }
+        else if(currentDirection == Direction.South){
+            xy[0] = 0;
+            xy[1] = -1;
+        }
+        else if(currentDirection == Direction.Southwest){
+            xy[0] = -1;
+            xy[1] = -1;
+        }
+        else if(currentDirection == Direction.West){
+            xy[0] = -1;
+            xy[1] = 0;
+        }
+        else if(currentDirection == Direction.Northwest){
+            xy[0] = -1;
+            xy[1] = 1;
+        }
+        return xy;
+    }
+
+    // TODO: update the mower instance
+    public void updateMower(MowerMap map, Action cacheAction, Location currentLoc, String s) {
+        currentLoc.setX(currentLoc.getX() + getXY(currentDirection)[0]);
+        currentLoc.setY(currentLoc.getY() + getXY(currentDirection)[1]);
+    }
+
     // TODO: set status
-    public void setStatus(MowerMap map, Location currentLoc, String s){
-        if(map.remainGrassNumber() == 0){
+    public void setStatus(MowerMap map, Location currentLoc, String s) {
+        if (map.remainGrassNumber() == 0) {
             currentStatus = MowerStatus.turnedOff;
-        }
-        else if(map[currentLoc.getX()][currentLoc.getY()] == SquareState.crater || map[currentLoc.getX()][currentLoc.getY()] == SquareState.fence){
+        } else if (map.map[currentLoc.getX()][currentLoc.getY()] == SquareState.crater || map.map[currentLoc.getX()][currentLoc.getY()] == SquareState.fence) {
             currentStatus = MowerStatus.crashed;
-        }
-        else if(map[currentLoc.getX()][currentLoc.getY()] == SquareState.puppy_mower){
+        } else if (map.map[currentLoc.getX()][currentLoc.getY()] == SquareState.puppy_mower) {
             currentStatus = MowerStatus.stalled;
-        }
-        else{
+        } else {
             currentStatus = MowerStatus.active;
         }
     }
