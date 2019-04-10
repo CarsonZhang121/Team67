@@ -11,6 +11,7 @@ public class Puppy {
     // List the puppyStatus here
    // private int puppyStatus;
     private String puppyStatus; // "stay" or "move"
+    private Location puppyLocations;
 
     double percentToStay;// range from 0 to 1; 1 means always stay; 0 means always move
     Random randGenForAction;
@@ -59,7 +60,7 @@ public class Puppy {
         return locIndex;
     }
 
-/*
+
     public Location getPuppyLocations() {
         return puppyLocations;
     }
@@ -67,7 +68,6 @@ public class Puppy {
     public void setPuppyLocations(Location puppyLocations) {
         this.puppyLocations = puppyLocations;
     }
-*/
 
     public String getPuppyStatus() {
         return this.puppyStatus;

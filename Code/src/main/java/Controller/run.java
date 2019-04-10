@@ -1,9 +1,17 @@
 package Controller;
+import Model.InputFile;
+import Model.SimulationMonitor;
 import Viewer.*;
 
 public class run {
     public static void main(String[] args){
         // TODO: 1. read the file to initialize the monitor;
+        InputFile inputfile = new InputFile();
+        SimulationMonitor simulationMonitor = new SimulationMonitor();
+
+        String[] file = {"5", "5", "1", "1", "3", "3", "4", "5", "5", "2", "3", "2", "4", "3"};
+        inputfile.loadSetting(file);
+        simulationMonitor.initalize(inputfile);
 
         // TODO: 2. run the simulation and update the GUI
 

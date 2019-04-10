@@ -1,8 +1,8 @@
-package main.java.Model;
+package Model;
 
-import main.java.Viewer.Action;
-import main.java.Viewer.Direction;
-import main.java.Viewer.Location;
+import Model.*;
+import Viewer.*;
+import Controller.*;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -77,8 +77,8 @@ public class SimulationMonitor {
         int xOrientation, yOrientation;
 
         int stepSize = action.getStepSize(); // get the move step size
-        int x = mowerLocations[mowerID].x();
-        int y = mowerLocations[mowerID].y();
+        int x = mowerLocations[mowerID].getX();
+        int y = mowerLocations[mowerID].getY();
         xOrientation = xDIR_MAP.get(mowerDirections[mowerID]);
         yOrientation = yDIR_MAP.get(mowerDirections[mowerID]);
         while (stepSize > 0) {
@@ -92,7 +92,7 @@ public class SimulationMonitor {
             }
 
             // check if square can cut or not.
-            if (!lawn.cutSquare(x, y)) {
+            if (!lawn.cutSquare(new Location(x, y))) {
                 return "Crashed";
             }
             stepSize -= 1;
@@ -105,8 +105,8 @@ public class SimulationMonitor {
     // TODO: mower scan
     public String[] scan(Location loc){
         String[] sur = new String[8];
-        int x = mowerLocations[0].x();
-        int y = mowerLocations[0].y();
+        int x = mowerLocations[0].getX();
+        int y = mowerLocations[0].getY();
         // clockwise scan
         sur[0] = lawn.getSquareState(new Location(x, y+1)); // North
         sur[1] = lawn.getSquareState(new Location(x+1, y+1)); // NorthEast
@@ -126,13 +126,14 @@ public class SimulationMonitor {
 
     // TODO: get # of grasses cut
     public int getCutGrass(){
-        return lawn.cutGrassNumber();
+        return lawn.getGrassCut();
     }
 
     // TODO: update the puppy
     public void updatePuppy(){
         for (Puppy p : puppyList) {
-            String action = p.nextAction(); // nextAction, should update the internal puppyStatus of Puppy.
+            String[] neightSquareState = new String[8];
+            String action = p.nextAction(neightSquareState); // nextAction, should update the internal puppyStatus of Puppy.
             if (action == "stay") continue;
             else {
                 // scan surrounding
@@ -148,7 +149,7 @@ public class SimulationMonitor {
                         Direction.South, Direction.Southwest, Direction.West, Direction.Northeast};
                 int xOrientation = xDIR_MAP.get(dirs[randomMoveChoice]);
                 int yOrientation = yDIR_MAP.get(dirs[randomMoveChoice]);
-                p.setPuppyLocations(new Location(curentLoc.getX()+xOrientation, curentLoc.getY()+yOrientation));
+                p.setPuppyLocations(new Location(curentLoc.getX()+xOrientation,curentLoc.getY()+yOrientation));
             }
         }
     }
@@ -186,11 +187,11 @@ public class SimulationMonitor {
     }
 
     public int getTatoalGrass() {
-        return tatoalGrass;
+        return totalGrass;
     }
 
     public void setTatoalGrass(int tatoalGrass) {
-        this.tatoalGrass = tatoalGrass;
+        this.totalGrass = tatoalGrass;
     }
 
     public int getStoppedMowers() {

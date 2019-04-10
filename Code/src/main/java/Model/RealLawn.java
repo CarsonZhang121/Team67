@@ -7,17 +7,35 @@ public class RealLawn extends Lawn {
     private int width;
     private int length;
 
+    public RealLawn() {
+    }
+
+    public RealLawn(int width, int length) {
+        this.width = width;
+        this.length = length;
+    }
+
+    public RealLawn(int width) {
+        this.width = width;
+    }
+
     public void setSquare(Location loc, String status){
         int x = loc.getX();
         int y = loc.getY();
         this.squares[x][y] = SquareState.valueOf(status);
     }
 
-    public void cutSquare(Location loc){
+    public boolean cutSquare(Location loc){
         int x = loc.getX();
         int y = loc.getY();
-        this.squares[x][y] = SquareState.valueOf("empty");
-        this.updateGrassNum();
+        boolean iscut = false;
+        if (this.squares[x][y] == SquareState.empty){
+            iscut = true;
+        }
+        else if(this.squares[x][y] == SquareState.grass){
+            iscut = false;
+        }
+        return iscut;
     }
 
     public String getSquareState(Location loc){
