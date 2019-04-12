@@ -9,7 +9,7 @@ public class run {
         InputFile inputfile = new InputFile();
         SimulationMonitor simulationMonitor = new SimulationMonitor();
 
-        String[] file = {"5", "5", "1", "1", "3", "3", "4", "5", "5", "2", "3", "2", "4", "3"};
+        String[] file = {"5", "5", "1", "1", "3", "3", "2", "2", "1", "2", "3", "2", "4", "3"};
         inputfile.loadSetting(file);
         simulationMonitor.initalize(inputfile);
 
