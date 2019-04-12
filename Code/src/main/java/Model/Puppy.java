@@ -42,7 +42,7 @@ public class Puppy {
     }
 
     private int decideNextMoveLocation(String[] neightSquareStates){
-        List<Integer> indexes = new ArrayList<>();
+        List<Integer> indexes = new ArrayList<Integer>();
         int randNum;
         int locIndex;
         for(int i=0; i < neightSquareStates.length; i++){
