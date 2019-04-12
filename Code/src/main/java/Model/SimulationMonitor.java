@@ -51,11 +51,16 @@ public class SimulationMonitor {
         for (int i = 0; i < puppyLocations.length; i++) {
             lawn.setSquare(puppyLocations[i], "puppy_grass");
         }
+        for(int i = 0; i < input.getLawnWidth(); i++){
+            for(int j = 0; j < input.getLawnHeight(); j++){
+                System.out.println(lawn.squares[i][j]);
+            }
+        }
     }
 
     public SimulationMonitor() {
 
-        xDIR_MAP = new HashMap<Direction, Integer>();
+        xDIR_MAP = new HashMap<>();
         xDIR_MAP.put(Direction.North, 0);
         xDIR_MAP.put(Direction.Northeast, 1);
         xDIR_MAP.put(Direction.East, 1);
@@ -65,7 +70,7 @@ public class SimulationMonitor {
         xDIR_MAP.put(Direction.West, -1);
         xDIR_MAP.put(Direction.Northwest, -1);
 
-        yDIR_MAP = new HashMap<Direction, Integer>();
+        yDIR_MAP = new HashMap<>();
         yDIR_MAP.put(Direction.North, 1);
         yDIR_MAP.put(Direction.Northeast, 1);
         yDIR_MAP.put(Direction.East, 0);
