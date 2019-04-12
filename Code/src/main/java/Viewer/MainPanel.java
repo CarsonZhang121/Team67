@@ -1,9 +1,7 @@
 
 package Viewer;
-/**
- *
- * @author Sylvie.Hu
- */
+
+
 public class MainPanel extends javax.swing.JFrame {
 
     /**
@@ -23,20 +21,24 @@ public class MainPanel extends javax.swing.JFrame {
     private void initComponents() {
 
         btnPanel = new javax.swing.JPanel();
-        startBtn = new javax.swing.JButton();
+        nexgBtn = new javax.swing.JButton();
         stopBtn = new javax.swing.JButton();
-        stepBtn = new javax.swing.JButton();
+        forwardBtn = new javax.swing.JButton();
         txtPanel1 = new javax.swing.JPanel();
         currentState = new java.awt.Label();
         txtPanel2 = new javax.swing.JPanel();
         grassState = new java.awt.Label();
         jScrollPane1 = new javax.swing.JScrollPane();
         currentLawn = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        currentLawn1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        startBtn.setText("Start");
-        startBtn.setActionCommand("");
+        nexgBtn.setText("Next");
+        nexgBtn.setToolTipText("");
+        nexgBtn.setActionCommand("");
 
         stopBtn.setText("Stop");
         stopBtn.setActionCommand("");
@@ -46,11 +48,11 @@ public class MainPanel extends javax.swing.JFrame {
             }
         });
 
-        stepBtn.setText("Step By Step");
-        stepBtn.setActionCommand("");
-        stepBtn.addActionListener(new java.awt.event.ActionListener() {
+        forwardBtn.setText("Fast-Forward");
+        forwardBtn.setActionCommand("");
+        forwardBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stepBtnActionPerformed(evt);
+                forwardBtnActionPerformed(evt);
             }
         });
 
@@ -60,23 +62,23 @@ public class MainPanel extends javax.swing.JFrame {
                 btnPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(btnPanelLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(startBtn)
+                                .addComponent(nexgBtn)
                                 .addGap(28, 28, 28)
                                 .addComponent(stopBtn)
                                 .addGap(31, 31, 31)
-                                .addComponent(stepBtn))
+                                .addComponent(forwardBtn))
         );
         btnPanelLayout.setVerticalGroup(
                 btnPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(btnPanelLayout.createSequentialGroup()
                                 .addGap(11, 11, 11)
                                 .addGroup(btnPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(startBtn)
+                                        .addComponent(nexgBtn)
                                         .addComponent(stopBtn)
-                                        .addComponent(stepBtn)))
+                                        .addComponent(forwardBtn)))
         );
 
-        currentState.setText("currentState");
+        currentState.setText("# of turns");
 
         javax.swing.GroupLayout txtPanel1Layout = new javax.swing.GroupLayout(txtPanel1);
         txtPanel1.setLayout(txtPanel1Layout);
@@ -89,10 +91,9 @@ public class MainPanel extends javax.swing.JFrame {
         );
         txtPanel1Layout.setVerticalGroup(
                 txtPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(txtPanel1Layout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(currentState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(14, Short.MAX_VALUE))
+                                .addComponent(currentState, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
         );
 
         grassState.setText("# grass cut and remaining");
@@ -122,45 +123,72 @@ public class MainPanel extends javax.swing.JFrame {
                         {null, null, null, null}
                 },
                 new String [] {
-                        "1", "2", "3", "4"
+                        "Mower ID", "State", "Next Action", "# of remaining turns"
                 }
         ));
         currentLawn.setAutoscrolls(false);
-        currentLawn.setRowHeight(32);
+        currentLawn.setRowHeight(24);
         jScrollPane1.setViewportView(currentLawn);
         currentLawn.getAccessibleContext().setAccessibleParent(currentLawn);
+
+        currentLawn1.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {"", null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String [] {
+                        "1", "2", "3", "4"
+                }
+        ));
+        currentLawn1.setAutoscrolls(false);
+        currentLawn1.setRowHeight(32);
+        jScrollPane2.setViewportView(currentLawn1);
+
+        jLabel1.setText("Mower State");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(31, Short.MAX_VALUE)
-                                .addComponent(txtPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(31, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(153, 153, 153)
+                                                .addComponent(btnPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(94, 94, 94)
+                                                .addComponent(txtPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(89, 89, 89)
+                                                .addComponent(txtPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(51, 51, 51)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel1)
+                                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addContainerGap(51, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64))
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(114, 114, 114)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(218, 218, 218))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(btnPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(37, 37, 37)
+                                .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                                .addGap(28, 28, 28))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -170,18 +198,22 @@ public class MainPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
-    private void stepBtnActionPerformed(java.awt.event.ActionEvent evt) {
+    private void forwardBtnActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
+
 
     // Variables declaration - do not modify
     private javax.swing.JPanel btnPanel;
     private javax.swing.JTable currentLawn;
+    private javax.swing.JTable currentLawn1;
     private java.awt.Label currentState;
+    private javax.swing.JButton forwardBtn;
     private java.awt.Label grassState;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton startBtn;
-    private javax.swing.JButton stepBtn;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton nexgBtn;
     private javax.swing.JButton stopBtn;
     private javax.swing.JPanel txtPanel1;
     private javax.swing.JPanel txtPanel2;
