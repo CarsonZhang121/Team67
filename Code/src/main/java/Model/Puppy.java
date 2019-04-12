@@ -1,9 +1,9 @@
 package Model;
 
 import Viewer.Location;
+import Viewer.SquareState;
 
 import java.util.*;
-import java.io.*;
 
 public class Puppy {
     //private Location puppyLocations;
@@ -11,7 +11,7 @@ public class Puppy {
     // List the puppyStatus here
    // private int puppyStatus;
     private String puppyStatus; // "stay" or "move"
-    private Location puppyLocations;
+    private Location puppyLocation;
 
     double percentToStay;// range from 0 to 1; 1 means always stay; 0 means always move
     Random randGenForAction;
@@ -25,7 +25,7 @@ public class Puppy {
     }
 
  
-    public String nextAction(String[] neightSquareStates){
+    public String nextAction(){
         String actionStr;
         double randDub = randGenForAction.nextDouble();
         if (randDub < percentToStay){
@@ -33,40 +33,37 @@ public class Puppy {
             actionStr = this.puppyStatus = "stay";
         }else {
             //move
-            this.puppyStatus = "move";
-            int locIndex = decideNextMoveLocation(neightSquareStates);
-            actionStr = "move" + "," + String.valueOf(locIndex); //e.g.: "move,0"
-
+            actionStr = this.puppyStatus = "move";
         }
         return actionStr;
     }
 
-    private int decideNextMoveLocation(String[] neightSquareStates){
-        List<Integer> indexes = new ArrayList<Integer>();
-        int randNum;
-        int locIndex;
-        for(int i=0; i < neightSquareStates.length; i++){
-            if(neightSquareStates[i].equals("grass")||
-                    (neightSquareStates[i].equals("empty"))||
-                    (neightSquareStates[i].equals("mower"))){
-                indexes.add(i);
-            }
-        }
+//    private int decideNextMoveLocation(SquareState[] neightSquareStates){
+//        List<Integer> indexes = new ArrayList<Integer>();
+//        int randNum;
+//        int locIndex;
+//        for(int i=0; i < neightSquareStates.length; i++){
+//            if(neightSquareStates[i] == SquareState.grass ||
+//                    (neightSquareStates[i] == SquareState.empty)||
+//                    (neightSquareStates[i] == SquareState.mower)){
+//                indexes.add(i);
+//            }
+//        }
+//
+//        int CeilingNum = indexes.size(); // the number of qualified candidates
+//        randNum = randGenForNextMove.nextInt(CeilingNum);
+//        locIndex = indexes.get(randNum);
+//       // System.out.printf("the num of candidates is %d; the random number is %d;the chosen Locindex is %d\n", CeilingNum,randNum,locIndex);
+//        return locIndex;
+//    }
 
-        int CeilingNum = indexes.size(); // the number of qualified candidates
-        randNum = randGenForNextMove.nextInt(CeilingNum);
-        locIndex = indexes.get(randNum);
-       // System.out.printf("the num of candidates is %d; the random number is %d;the chosen Locindex is %d\n", CeilingNum,randNum,locIndex);
-        return locIndex;
+
+    public Location getPuppyLocation() {
+        return puppyLocation;
     }
 
-
-    public Location getPuppyLocations() {
-        return puppyLocations;
-    }
-
-    public void setPuppyLocations(Location puppyLocations) {
-        this.puppyLocations = puppyLocations;
+    public void setPuppyLocation(Location puppyLocation) {
+        this.puppyLocation = puppyLocation;
     }
 
     public String getPuppyStatus() {

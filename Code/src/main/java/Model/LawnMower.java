@@ -1,149 +1,222 @@
 package Model;
 
 import Viewer.*;
-import com.sun.tools.javac.util.ArrayUtils;
-import sun.java2d.xr.DirtyRegion;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 
 public class LawnMower {
     private MowerStatus currentStatus;
-    private int stallTurn;
+    private int stallTurn; // 0 means the mower is active. larger than 0 means mower is stalled. should decrease by 1 in each turn.
     private Location currentLoc;
     private Direction currentDirection;
     private Action cacheAction;
+    private HashMap<Direction, Integer> xDIR_MAP;
+    private HashMap<Direction, Integer> yDIR_MAP;
+    private Random randGenerator;
+
+    public LawnMower(Location loc, Direction dir) {
+        currentStatus = MowerStatus.active;
+        randGenerator = new Random();
+        stallTurn = 0;
+        currentLoc = loc;
+        currentDirection = dir;
+        cacheAction = null;
+        xDIR_MAP = new HashMap<Direction, Integer>();
+        xDIR_MAP.put(Direction.north, 0);
+        xDIR_MAP.put(Direction.northeast, 1);
+        xDIR_MAP.put(Direction.east, 1);
+        xDIR_MAP.put(Direction.southeast, 1);
+        xDIR_MAP.put(Direction.south, 0);
+        xDIR_MAP.put(Direction.southwest, -1);
+        xDIR_MAP.put(Direction.west, -1);
+        xDIR_MAP.put(Direction.northwest, -1);
+
+        yDIR_MAP = new HashMap<Direction, Integer>();
+        yDIR_MAP.put(Direction.north, 1);
+        yDIR_MAP.put(Direction.northeast, 1);
+        yDIR_MAP.put(Direction.east, 0);
+        yDIR_MAP.put(Direction.southeast, -1);
+        yDIR_MAP.put(Direction.south, -1);
+        yDIR_MAP.put(Direction.southwest, -1);
+        yDIR_MAP.put(Direction.west, 0);
+        yDIR_MAP.put(Direction.northwest, 1);
+    }
 
 
     // TODO: get the next action of the mower
-    public Action nextAction(MowerMap map, Location currentLoc) {
+    public Action nextAction(MowerMap lawn) {
+        if (cacheAction != null) {
+            Action act = new Action(cacheAction.getName());
+            if (act.getName().equals("move")) {
+                act.setMoveAction(cacheAction.getStepSize(), cacheAction.getDirection());
+            }
+            cacheAction = null;
+            return act;
+        }
+        int x = currentLoc.getX();
+        int y = currentLoc.getY();
+        int xOrientation, yOrientation;
+        int totalCut = 0;
+        int steps = 0;
+        Direction maxDirection = currentDirection;
 
-        SquareState[] neighbors = new SquareState[8];
-        neighbors[0] = map.map[currentLoc.getX()][currentLoc.getY() + 1];
-        neighbors[1] = map.map[currentLoc.getX() + 1][currentLoc.getY() + 1];
-        neighbors[2] = map.map[currentLoc.getX() + 1][currentLoc.getY()];
-        neighbors[3] = map.map[currentLoc.getX() + 1][currentLoc.getY() - 1];
-        neighbors[4] = map.map[currentLoc.getX()][currentLoc.getY() - 1];
-        neighbors[5] = map.map[currentLoc.getX() - 1][currentLoc.getY() - 1];
-        neighbors[6] = map.map[currentLoc.getX() - 1][currentLoc.getY()];
-        neighbors[7] = map.map[currentLoc.getX() - 1][currentLoc.getY() + 1];
+        xOrientation = xDIR_MAP.get(currentDirection);
+        yOrientation = yDIR_MAP.get(currentDirection);
 
-        boolean isUnkown = false;
-        for (SquareState a : neighbors) {
-            if (a == SquareState.unknown) {
-                isUnkown = true;
-                break;
+        x += xOrientation;
+        y += yOrientation;
+
+        while (lawn.getSquare(new Location(x, y)) != SquareState.unknown) {
+            SquareState tmp = lawn.getSquare(new Location(x, y));
+            if (!(tmp == SquareState.empty || tmp == SquareState.grass)) break;
+            if (tmp == SquareState.grass) totalCut += 1;
+            steps += 1;
+            x += xOrientation;
+            y += yOrientation;
+        }
+
+        // OK to follow current direction.
+        if (totalCut > 0) {
+            Action act = new Action("move");
+            act.setMoveAction(steps, currentDirection);
+            return act;
+        }
+
+        for (Direction d : Direction.values()) {
+            if (d == currentDirection) continue; // already checked current direction.
+            x = currentLoc.getX();
+            y = currentLoc.getY();
+            xOrientation = xDIR_MAP.get(d);
+            yOrientation = yDIR_MAP.get(d);
+            x += xOrientation;
+            y += yOrientation;
+
+            int tmpCut = 0;
+            while (lawn.getSquare(new Location(x, y)) != SquareState.unknown) {
+                SquareState tmp = lawn.getSquare(new Location(x, y));
+                if (!(tmp == SquareState.empty || tmp == SquareState.grass)) break;
+                if (tmp == SquareState.grass) tmpCut += 1;
+                x += xOrientation;
+                y += yOrientation;
+            }
+
+            if (tmpCut > totalCut) {
+                totalCut = tmpCut;
+                maxDirection = d;
             }
         }
 
-        int[] newLoc = new int[2];
-        newLoc[0] = currentLoc.getX() + getXY(currentDirection)[0];
-        newLoc[1] = currentLoc.getY() + getXY(currentDirection)[1];
+        if (totalCut > 0) {
+            Action act = new Action("move");
+            act.setMoveAction(0, maxDirection);
+            return act;
+        }
 
-        if (isUnkown){
-            scan(map, currentLoc);
+        // scan if there are any unknown square around.
+        for (Direction d : Direction.values()) {
+            if (d == currentDirection) continue; // already checked current direction.
+            x = currentLoc.getX();
+            y = currentLoc.getY();
+            xOrientation = xDIR_MAP.get(d);
+            yOrientation = yDIR_MAP.get(d);
+            x += xOrientation;
+            y += yOrientation;
+            if (lawn.getSquare(new Location(x, y)) == SquareState.unknown) return new Action("scan");
         }
-        else if (map.map[newLoc[0]][newLoc[1]] == SquareState.grass) {
-            cacheAction.setStepSize(1);
-        }
-        else if (map.map[newLoc[0]][newLoc[1]] == SquareState.crater || map.map[newLoc[0]][newLoc[1]] == SquareState.mower || map.map[newLoc[0]][newLoc[1]] == SquareState.puppy_grass || map.map[newLoc[0]][newLoc[1]] == SquareState.puppy_empty || map.map[newLoc[0]][newLoc[1]] == SquareState.puppy_mower || map.map[newLoc[0]][newLoc[1]] == SquareState.fence) {
-            changeDirection(currentDirection);
-        }
-        return null;
-    }
 
-    private void scan(MowerMap map, Location currentLoc) {
+        if (lawn.isCompleted()) return new Action("turn off");
 
-        SquareState[] scanResult = new SquareState[8];
-        map.map[currentLoc.getX()][currentLoc.getY() + 1] = scanResult[0];
-        map.map[currentLoc.getX() + 1][currentLoc.getY() + 1] = scanResult[1];
-        map.map[currentLoc.getX() + 1][currentLoc.getY()] = scanResult[2];
-        map.map[currentLoc.getX() + 1][currentLoc.getY() - 1] = scanResult[3];
-        map.map[currentLoc.getX()][currentLoc.getY() - 1] = scanResult[4];
-        map.map[currentLoc.getX() - 1][currentLoc.getY() - 1] = scanResult[5];
-        map.map[currentLoc.getX() - 1][currentLoc.getY()] = scanResult[6];
-        map.map[currentLoc.getX() - 1][currentLoc.getY() + 1] = scanResult[7];
-    }
+        // if reach here, means mower could not find any grass to cut on all 8 directions, but there are still remain
+        // some invisible squares. So, search for invisible squares next.
+        int closestUnknownSquare = Integer.MAX_VALUE;
+        List<Direction> randomDirs = new ArrayList<Direction>();
+        List<Integer> randomSteps = new ArrayList<Integer>();
+        for (Direction d : Direction.values()) {
+            if (d == currentDirection) continue; // already checked current direction.
+            x = currentLoc.getX();
+            y = currentLoc.getY();
+            xOrientation = xDIR_MAP.get(d);
+            yOrientation = yDIR_MAP.get(d);
+            x += xOrientation;
+            y += yOrientation;
 
-    private void changeDirection(Direction currentDirection) {
-        if(currentDirection == Direction.North){
-            this.currentDirection = Direction.Northeast;
-        }
-        else if(currentDirection == Direction.Northeast){
-            this.currentDirection = Direction.East;
-        }
-        else if(currentDirection == Direction.East){
-            this.currentDirection = Direction.Southeast;
-        }
-        else if(currentDirection == Direction.Southeast){
-            this.currentDirection = Direction.South;
-        }
-        else if(currentDirection == Direction.South){
-            this.currentDirection = Direction.Southwest;
-        }
-        else if(currentDirection == Direction.Southwest){
-            this.currentDirection = Direction.West;
-        }
-        else if(currentDirection == Direction.West){
-            this.currentDirection = Direction.Northwest;
-        }
-        else if(currentDirection == Direction.Northwest){
-            this.currentDirection = Direction.North;
-        }
-    }
+            int tmpDist = 0;
+            while (lawn.getSquare(new Location(x, y)) != SquareState.unknown) {
+                SquareState tmp = lawn.getSquare(new Location(x, y));
+                if (tmp == SquareState.out_of_bound || tmp == SquareState.crater || tmp == SquareState.fence) {
+                    if (tmpDist > 0) {
+                        randomDirs.add(d);
+                        randomSteps.add(tmpDist);
+                        tmpDist = 0; // reach fence or crater, do not find invisible square.
+                    }
+                    break;
+                }
+                x += xOrientation;
+                y += yOrientation;
+                tmpDist += 1;
+            }
 
-    public int[] getXY(Direction currentDirection){
-        int[] xy = new int[2];
-        if(currentDirection == Direction.North){
-            xy[0] = 0;
-            xy[1] = 1;
+            if (tmpDist > 0 && tmpDist < closestUnknownSquare) {
+                closestUnknownSquare = tmpDist;
+                maxDirection = d;
+            }
         }
-        else if(currentDirection == Direction.Northeast){
-            xy[0] = 1;
-            xy[1] = 1;
+
+        if (closestUnknownSquare != Integer.MAX_VALUE && closestUnknownSquare > 0) {
+            Action act = new Action("move");
+            // if mower is currently at maxDirection, just move for next. Otherwise, should turn direction.
+            if (currentDirection == maxDirection) act.setMoveAction(closestUnknownSquare, maxDirection);
+            else
+            {
+                cacheAction = new Action("move");
+                cacheAction.setMoveAction(closestUnknownSquare, maxDirection);
+                act.setMoveAction(0, maxDirection);
+            }
+            return act;
         }
-        else if(currentDirection == Direction.East){
-            xy[0] = 1;
-            xy[1] = 0;
+
+        // if reach here, all direction of mower is blocked by either fence or crater. Do random move.
+        int randomMoveChoice = randGenerator.nextInt(randomDirs.size());
+        Direction rDir = randomDirs.get(randomMoveChoice);
+        int step = randomSteps.get(randomMoveChoice);
+
+        Action act = new Action("move");
+        if (currentDirection == rDir) act.setMoveAction(step, rDir);
+        else  {
+            cacheAction = new Action("move");
+            cacheAction.setMoveAction(step, rDir);
+            act.setMoveAction(0, rDir);
         }
-        else if(currentDirection == Direction.Southeast){
-            xy[0] = 1;
-            xy[1] = -1;
-        }
-        else if(currentDirection == Direction.South){
-            xy[0] = 0;
-            xy[1] = -1;
-        }
-        else if(currentDirection == Direction.Southwest){
-            xy[0] = -1;
-            xy[1] = -1;
-        }
-        else if(currentDirection == Direction.West){
-            xy[0] = -1;
-            xy[1] = 0;
-        }
-        else if(currentDirection == Direction.Northwest){
-            xy[0] = -1;
-            xy[1] = 1;
-        }
-        return xy;
+        return act;
     }
 
     // TODO: update the mower instance
-    public void updateMower(MowerMap map, Action cacheAction, Location currentLoc, String s) {
-        currentLoc.setX(currentLoc.getX() + getXY(currentDirection)[0]);
-        currentLoc.setY(currentLoc.getY() + getXY(currentDirection)[1]);
+    public void updateMower(MowerMap lawn, Action action) {
+        int xOrientation, yOrientation;
+
+        int stepSize = action.getStepSize();
+        int x = currentLoc.getX();
+        int y = currentLoc.getY();
+        xOrientation = xDIR_MAP.get(currentDirection);
+        yOrientation = yDIR_MAP.get(currentDirection);
+        while (stepSize > 0) {
+            x += xOrientation;
+            y += yOrientation;
+            lawn.setSquare(new Location(x, y), SquareState.empty, currentDirection);
+            stepSize -= 1;
+        }
+        currentLoc = new Location(x, y);
+        currentDirection = action.getDirection();
     }
 
-    // TODO: set status
-    public void setStatus(MowerMap map, Location currentLoc, String s) {
-        if (map.remainGrassNumber() == 0) {
-            currentStatus = MowerStatus.turnedOff;
-        } else if (map.map[currentLoc.getX()][currentLoc.getY()] == SquareState.crater || map.map[currentLoc.getX()][currentLoc.getY()] == SquareState.fence) {
-            currentStatus = MowerStatus.crashed;
-        } else if (map.map[currentLoc.getX()][currentLoc.getY()] == SquareState.puppy_mower) {
-            currentStatus = MowerStatus.stalled;
-        } else {
-            currentStatus = MowerStatus.active;
-        }
+    // TODO: set status if crashed, turned off, stalled.
+    public void setStatus(MowerMap map, Location finalLocation, SquareState finalState) {
+        if (finalLocation == currentLoc) map.setSquare(finalLocation, finalState, currentDirection);
+        // need more logic here.
     }
 
     public MowerStatus getCurrentStatus() {
@@ -162,8 +235,13 @@ public class LawnMower {
     }
 
     public void setStallTurn(int stallTurn) {
-
-        this.stallTurn = stallTurn;
+        if (stallTurn <= 0) {
+            this.stallTurn = 0;
+            currentStatus = MowerStatus.active;
+        } else {
+            this.stallTurn = stallTurn;
+            currentStatus = MowerStatus.stalled;
+        }
     }
 
     public Location getCurrentLoc() {

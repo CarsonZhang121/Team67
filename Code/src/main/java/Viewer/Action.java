@@ -5,29 +5,25 @@ public class Action {
     private int stepSize;
     private Direction direction;
 
-    //TODO: set the mower action
-    public void setMoveAction(int stepSize, Direction d){
+    public Action(String name) {
+        this.name = name;
+    }
 
+    //TODO: set the mower action
+    public void setMoveAction(int stepSize, Direction direction) {
+        this.stepSize = stepSize;
+        this.direction = direction;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getStepSize() {
         return stepSize;
     }
 
-    public void setStepSize(int stepSize){ this.stepSize = stepSize;}
-
     public Direction getDirection() {
         return direction;
     }
-
-    public void setDirection(Direction direction) {this.direction = direction;}
-
 }

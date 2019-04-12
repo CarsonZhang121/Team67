@@ -9,5 +9,6 @@ public enum SquareState {
     puppy_empty,
     puppy_grass,
     mower,
-    unknown
+    unknown,
+    out_of_bound
 }
