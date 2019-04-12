@@ -25,10 +25,17 @@ public class SimulationMonitor {
         randGenerator = new Random();
         simulationOnStatus = true;
         lawn = new RealLawn(input.getLawnWidth(), input.getLawnHeight());
+        lawn.squares = new SquareState[input.getLawnWidth()][input.getLawnHeight()];
         mowerLocations = input.getMowerLocations();
         mowerDirections = input.getMowerInitialDirections();
         totalSize = input.getLawnWidth() * input.getLawnHeight();
         totalGrass = totalSize;
+
+        for(int i = 0; i < input.getLawnWidth(); i++){
+            for(int j = 0; j < input.getLawnHeight(); j++){
+                lawn.squares[i][j] = SquareState.grass;
+            }
+        }
 
         for (int i = 0; i < mowerLocations.length; i++) {
             lawn.setSquare(mowerLocations[i], "empty");
@@ -41,9 +48,8 @@ public class SimulationMonitor {
         }
 
         Location[] puppyLocations = input.getPuppyLocations();
-        puppyList = new Puppy[puppyLocations.length];
-        for (int i = 0; i < puppyList.length; i++) {
-            puppyList[i].setPuppyLocations(puppyLocations[i]);
+        for (int i = 0; i < puppyLocations.length; i++) {
+            lawn.setSquare(puppyLocations[i], "puppy_grass");
         }
     }
 
