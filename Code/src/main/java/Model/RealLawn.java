@@ -19,10 +19,10 @@ public class RealLawn extends Lawn {
         this.width = width;
     }
 
-    public void setSquare(Location loc, String status){
+    public void setSquare(Location loc, SquareState status){
         int x = loc.getX();
         int y = loc.getY();
-        this.squares[x][y] = SquareState.valueOf(status);
+        squares[x][y] = status;
     }
 
     // no need to consider puppy here.
@@ -47,31 +47,6 @@ public class RealLawn extends Lawn {
         return squares[x][y];
     }
 
-    public void initSquares(int[][] pos, String[] state){
-        try {
-            int l;
-            for (int i = 0; i < this.width; i++){
-                for (int j = 0; j < this.height; j++){
-                    Location loc = new Location();
-                    loc.setX(i);
-                    loc.setY(j);
-                    setSquare(loc, "grass");
-                }
-            }
-
-            if ((l = pos.length) == state.length) {
-                for (int i = 0; i < l; i++){
-                    Location loc = new Location();
-                    loc.setX(pos[i][0]);
-                    loc.setY(pos[i][1]);
-                    setSquare(loc, state[i]);
-                }
-            }
-
-        } catch (Exception e){
-            System.out.println("[ERROR]: Invalid initialization of real lawn!");
-        }
-    }
 
     private void renderHorizontalBar(int size) {
         System.out.print(" ");
@@ -125,21 +100,5 @@ public class RealLawn extends Lawn {
             System.out.print(" " + i);
         }
         System.out.println("");
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getheight() {
-        return height;
-    }
-
-    public void setheight(int height) {
-        this.height = height;
     }
 }

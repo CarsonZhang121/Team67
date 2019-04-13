@@ -194,30 +194,6 @@ public class LawnMower {
         return act;
     }
 
-    // TODO: update the mower instance
-    public void updateMower(MowerMap lawn, Action action) {
-        int xOrientation, yOrientation;
-
-        int stepSize = action.getStepSize();
-        int x = currentLoc.getX();
-        int y = currentLoc.getY();
-        xOrientation = xDIR_MAP.get(currentDirection);
-        yOrientation = yDIR_MAP.get(currentDirection);
-        while (stepSize > 0) {
-            x += xOrientation;
-            y += yOrientation;
-            lawn.setSquare(new Location(x, y), SquareState.empty, currentDirection);
-            stepSize -= 1;
-        }
-        currentLoc = new Location(x, y);
-        currentDirection = action.getDirection();
-    }
-
-    // TODO: set status if crashed, turned off, stalled.
-    public void setStatus(MowerMap map, Location finalLocation, SquareState finalState) {
-        if (finalLocation == currentLoc) map.setSquare(finalLocation, finalState, currentDirection);
-        // need more logic here.
-    }
 
     public MowerStatus getCurrentStatus() {
 
@@ -244,33 +220,11 @@ public class LawnMower {
         }
     }
 
-    public Location getCurrentLoc() {
-
-        return currentLoc;
+    public void setCurrentLoc(Location loc) {
+        currentLoc = loc;
     }
 
-    public void setCurrentLoc(Location currentLoc) {
-
-        this.currentLoc = currentLoc;
-    }
-
-    public Direction getCurrentDirection() {
-
-        return currentDirection;
-    }
-
-    public void setCurrentDirection(Direction currentDirection) {
-
-        this.currentDirection = currentDirection;
-    }
-
-    public Action getCacheAction() {
-
-        return cacheAction;
-    }
-
-    public void setCacheAction(Action cacheAction) {
-
-        this.cacheAction = cacheAction;
+    public void setCurrentDirection(Direction dir) {
+        currentDirection = dir;
     }
 }

@@ -7,10 +7,9 @@ import Viewer.SquareState;
 import java.util.Arrays;
 
 public class MowerMap extends Lawn{
-    private int width = 60;
-    private int height = 40;
+    private int width = 20;
+    private int height = 15;
     private SquareState[][] map;
-//    private int remainGrassNumber = 0;
     private int[] fenceLoc; // order: top, right;
 
     public MowerMap() {
@@ -86,11 +85,5 @@ public class MowerMap extends Lawn{
         setSquare(new Location(x-1, y+1), surs[7], Direction.northwest); // NorthWest
 
         map[x][y] = SquareState.mower;
-    }
-
-    //TODO: extend the map when the mower goes over the boundary
-    //set square = 60 x 40, for maximum size of 200 x 200, no need to expand
-    private void expand(){
-        return;
     }
 }
