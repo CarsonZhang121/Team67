@@ -2,62 +2,112 @@ package Model;
 
 import Viewer.*;
 
+import java.io.File;
+import java.util.Scanner;
+
 
 public class InputFile {
-    private Integer lawnHeight;
-    private Integer lawnWidth;
+    private int lawnWidth;
+    private int lawnHeight;
+    private int stallTurn;
     private Location[] mowerLocations;
     private Direction[] mowerInitialDirections;
     private Location[] craterLocations;
     private Location[] puppyLocations;
-    private String[] info;
+    private double stayPercent;
+    private int totalTurn;
 
-    public void loadSetting(String[] file){info = file;}
-    public int getLawnHeight(){return Integer.parseInt(info[0]);}
-    public int getLawnWidth(){return Integer.parseInt(info[1]);}
-    public Location[] getMowerLocations(){
-        Location mower1 = new Location();
-        mower1.setX(Integer.parseInt(info[2]));
-        mower1.setY(Integer.parseInt(info[3]));
-        Location mower2 = new Location();
-        mower2.setX(Integer.parseInt(info[4]));
-        mower2.setY(Integer.parseInt(info[5]));
-        Location[] mowerLocations = new Location[2];
-        mowerLocations[0] = mower1;
-        mowerLocations[1] = mower2;
+    public void loadSetting(String testFileName) {
+        final String DELIMITER = ",";
+
+        try {
+            Scanner takeCommand = new Scanner(new File(testFileName));
+            String[] tokens;
+            int k;
+
+            // read in the lawn information
+            tokens = takeCommand.nextLine().split(DELIMITER);
+            lawnWidth = Integer.parseInt(tokens[0]);
+            tokens = takeCommand.nextLine().split(DELIMITER);
+            lawnHeight = Integer.parseInt(tokens[0]);
+
+            // read in the lawnmower starting information
+            tokens = takeCommand.nextLine().split(DELIMITER);
+            int numMowers = Integer.parseInt(tokens[0]);
+            mowerLocations = new Location[numMowers];
+            mowerInitialDirections = new Direction[numMowers];
+            tokens = takeCommand.nextLine().split(DELIMITER);
+            stallTurn = Integer.parseInt(tokens[0]);
+
+            for (k = 0; k < numMowers; k++) {
+                tokens = takeCommand.nextLine().split(DELIMITER);
+                int mowerX = Integer.parseInt(tokens[0]);
+                int mowerY = Integer.parseInt(tokens[1]);
+                mowerLocations[k] = new Location(mowerX, mowerY);
+                mowerInitialDirections[k] = Direction.valueOf(tokens[2]);
+            }
+
+            // read in the crater information
+            tokens = takeCommand.nextLine().split(DELIMITER);
+            int numCraters = Integer.parseInt(tokens[0]);
+            craterLocations = new Location[numCraters];
+            for (k = 0; k < numCraters; k++) {
+                tokens = takeCommand.nextLine().split(DELIMITER);
+                int craterX = Integer.parseInt(tokens[0]);
+                int craterY = Integer.parseInt(tokens[1]);
+                craterLocations[k] = new Location(craterX, craterY);
+            }
+
+            // read in the puppy information
+            tokens = takeCommand.nextLine().split(DELIMITER);
+            int numPuppy = Integer.parseInt(tokens[0]);
+            puppyLocations = new Location[numPuppy];
+            tokens = takeCommand.nextLine().split(DELIMITER);
+            stayPercent = Double.parseDouble(tokens[0]) / 100.0;
+
+            for (k = 0; k < numPuppy; k++) {
+                tokens = takeCommand.nextLine().split(DELIMITER);
+                int craterX = Integer.parseInt(tokens[0]);
+                int craterY = Integer.parseInt(tokens[1]);
+                puppyLocations[k] = new Location(craterX, craterY);
+            }
+
+            tokens = takeCommand.nextLine().split(DELIMITER);
+            totalTurn = Integer.parseInt(tokens[0]);
+
+            takeCommand.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println();
+        }
+    }
+
+    public int getLawnWidth() {
+        return lawnWidth;
+    }
+
+    public int getLawnHeight() {
+        return lawnHeight;
+    }
+
+    public Location[] getMowerLocations() {
         return mowerLocations;
     }
-    public Direction[] getMowerInitialDirections(){
-        Direction mower1 = Direction.North;
-        Direction mower2 = Direction.North;
-        Direction[] directions = new Direction[2];
-        directions[0] = mower1;
-        directions[1] = mower2;
-        return directions;
+
+    public int getStallTurn() { return stallTurn; }
+
+    public Direction[] getMowerInitialDirections() {
+        return mowerInitialDirections;
     }
-    public Location[] getCraterLocations(){
-        Location crater1 = new Location();
-        crater1.setX(Integer.parseInt(info[6]));
-        crater1.setY(Integer.parseInt(info[7]));
-        Location crater2 = new Location();
-        crater2.setX(Integer.parseInt(info[8]));
-        crater2.setY(Integer.parseInt(info[9]));
-        Location[] craterLocations = new Location[2];
-        craterLocations[0] = crater1;
-        craterLocations[1] = crater2;
+
+    public Location[] getCraterLocations() {
         return craterLocations;
     }
-    public Location[] getPuppyLocations(){
-        Location puppy1 = new Location();
-        puppy1.setX(Integer.parseInt(info[10]));
-        puppy1.setY(Integer.parseInt(info[11]));
-        Location puppy2 = new Location();
-        puppy2.setX(Integer.parseInt(info[12]));
-        puppy2.setY(Integer.parseInt(info[13]));
-        Location[] puppyLocations = new Location[2];
-        puppyLocations[0] = puppy1;
-        puppyLocations[1] = puppy2;
-        return puppyLocations;
-    }
+
+    public Location[] getPuppyLocations() { return puppyLocations; }
+
+    public double getStayPercent() { return stayPercent; }
+
+    public int getTotalTurn() { return totalTurn; }
 }
 

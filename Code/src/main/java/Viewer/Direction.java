@@ -1,12 +1,12 @@
 package Viewer;
 
 public enum Direction {
-    North,
-    Northeast,
-    East,
-    Southeast,
-    South,
-    Southwest,
-    West,
-    Northwest
+    north,
+    northeast,
+    east,
+    southeast,
+    south,
+    southwest,
+    west,
+    northwest
 }

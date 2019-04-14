@@ -1,77 +1,33 @@
 package Model;
 
 import Viewer.Location;
+import Viewer.SquareState;
 
 import java.util.*;
-import java.io.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Puppy {
-    //private Location puppyLocations;
+    private Location puppyLocation;
 
-    // List the puppyStatus here
-    private String puppyStatus; // "stay" or "move"
-
-    int percentToStay;// range from 0 to 100; 100 means always stay; 0 means always move
-    int randomNum;
+    double percentToStay;// range from 0 to 1; 1 means always stay; 0 means always move
+    Random randGenForAction;
 
     // Constructor
-    public Puppy(int percentToStay){
+    public Puppy(double percentToStay) {
         this.percentToStay = percentToStay;
+        randGenForAction = new Random();
     }
 
-       // TODO: add nextAction for Puppy
     public String nextAction(){
-        randomNum = ThreadLocalRandom.current().nextInt(0, 100 + 1);
-        System.out.printf("The randonNum is %d\n", randomNum);
-
-        if (randomNum < percentToStay){
-            //stay
-            this.puppyStatus = "stay";
-
-        }else {
-            //move
-            this.puppyStatus = "move";
-        }
-        return this.puppyStatus;
-    }
- 
-   /*
-    private int decideNextMoveLocation(String[] neightSquareStates){
-        List<Integer> indexes = new ArrayList<Integer>();
-        int randNum;
-        int locIndex;
-        for(int i=0; i < neightSquareStates.length; i++){
-            if(neightSquareStates[i].equals("grass")||
-                    (neightSquareStates[i].equals("empty"))||
-                    (neightSquareStates[i].equals("mower"))){
-                indexes.add(i);
-            }
-        }
-
-        int CeilingNum = indexes.size(); // the number of qualified candidates
-        randNum = randGenForNextMove.nextInt(CeilingNum);
-        locIndex = indexes.get(randNum);
-       // System.out.printf("the num of candidates is %d; the random number is %d;the chosen Locindex is %d\n", CeilingNum,randNum,locIndex);
-        return locIndex;
-    }
-    */
-
-    public Location getPuppyLocations() {
-        return puppyLocations;
+        double randDub = randGenForAction.nextDouble();
+        if (randDub < percentToStay) return "stay";
+        else return "move";
     }
 
-    public void setPuppyLocations(Location puppyLocations) {
-        this.puppyLocations = puppyLocations;
+    public Location getPuppyLocation() {
+        return puppyLocation;
     }
 
-    public String getPuppyStatus() {
-        return this.puppyStatus;
+    public void setPuppyLocation(Location puppyLocation) {
+        this.puppyLocation = puppyLocation;
     }
-
-    public void setPuppyStatus(String puppyStatus) {
-        this.puppyStatus = puppyStatus;
-    }
-
-
 }
