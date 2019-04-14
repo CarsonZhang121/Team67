@@ -4,43 +4,39 @@ import Viewer.Location;
 
 import java.util.*;
 import java.io.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Puppy {
     //private Location puppyLocations;
 
     // List the puppyStatus here
-   // private int puppyStatus;
     private String puppyStatus; // "stay" or "move"
-    private Location puppyLocations;
 
-    double percentToStay;// range from 0 to 1; 1 means always stay; 0 means always move
-    Random randGenForAction;
-    Random randGenForNextMove;
+    int percentToStay;// range from 0 to 100; 100 means always stay; 0 means always move
+    int randomNum;
 
     // Constructor
-    public Puppy(double percentToStay){
+    public Puppy(int percentToStay){
         this.percentToStay = percentToStay;
-        randGenForAction = new Random();
-        randGenForNextMove = new Random();
     }
 
- 
-    public String nextAction(String[] neightSquareStates){
-        String actionStr;
-        double randDub = randGenForAction.nextDouble();
-        if (randDub < percentToStay){
+       // TODO: add nextAction for Puppy
+    public String nextAction(){
+        randomNum = ThreadLocalRandom.current().nextInt(0, 100 + 1);
+        System.out.printf("The randonNum is %d\n", randomNum);
+
+        if (randomNum < percentToStay){
             //stay
-            actionStr = this.puppyStatus = "stay";
+            this.puppyStatus = "stay";
+
         }else {
             //move
             this.puppyStatus = "move";
-            int locIndex = decideNextMoveLocation(neightSquareStates);
-            actionStr = "move" + "," + String.valueOf(locIndex); //e.g.: "move,0"
-
         }
-        return actionStr;
+        return this.puppyStatus;
     }
-
+ 
+   /*
     private int decideNextMoveLocation(String[] neightSquareStates){
         List<Integer> indexes = new ArrayList<Integer>();
         int randNum;
@@ -59,7 +55,7 @@ public class Puppy {
        // System.out.printf("the num of candidates is %d; the random number is %d;the chosen Locindex is %d\n", CeilingNum,randNum,locIndex);
         return locIndex;
     }
-
+    */
 
     public Location getPuppyLocations() {
         return puppyLocations;
@@ -79,3 +75,4 @@ public class Puppy {
 
 
 }
+
