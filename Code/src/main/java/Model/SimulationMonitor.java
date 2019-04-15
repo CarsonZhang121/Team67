@@ -25,6 +25,7 @@ public class SimulationMonitor {
     private HashMap<Direction, Integer> yDIR_MAP;
 
     // initialize the simulation.
+    // TO DO: should also set mower's initial locations in MowerMap !
     public void initialize(InputFile input) {
         randGenerator = new Random();
         simulationOn = true;
