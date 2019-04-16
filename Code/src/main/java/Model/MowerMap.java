@@ -7,8 +7,8 @@ import Viewer.SquareState;
 import java.util.Arrays;
 
 public class MowerMap extends Lawn{
-    private int width = 20;
-    private int height = 15;
+    private int width = 10;
+    private int height = 8;
     private SquareState[][] map;
     private int[] fenceLoc; // order: top, right;
 
@@ -85,5 +85,60 @@ public class MowerMap extends Lawn{
         setSquare(new Location(x-1, y+1), surs[7], Direction.northwest); // NorthWest
 
         map[x][y] = SquareState.mower;
+    }
+
+    private void renderHorizontalBar(int size) {
+        System.out.print(" ");
+        for (int k = 0; k < size; k++) {
+            System.out.print("-");
+        }
+        System.out.println("");
+    }
+
+    public void renderMowermap(Location[] mowerLocations) {
+        int i, j;
+        int charWidth = 2 * width + 2;
+
+        // display the rows of the lawn from top to bottom
+        for (j = height - 1; j >= 0; j--) {
+            renderHorizontalBar(charWidth);
+
+            // display the Y-direction identifier
+            System.out.print(j);
+
+            // display the contents of each square on this row
+            for (i = 0; i < width; i++) {
+                System.out.print("|");
+
+                boolean isMower = false;
+                for (Location l : mowerLocations) {
+                    if (i == l.getX() && j == l.getY()) {
+                        System.out.print("M");
+                        isMower = true;
+                        break;
+                    }
+                }
+
+                if (isMower) continue;
+                else {
+                    if (map[i][j] == SquareState.empty) System.out.print(" ");
+                    else if (map[i][j] == SquareState.grass) System.out.print("g");
+                    else if (map[i][j] == SquareState.crater) System.out.print("c");
+                    else if (map[i][j] == SquareState.puppy_empty) System.out.print("p");
+                    else if (map[i][j] == SquareState.puppy_grass) System.out.print("pg");
+                    else if (map[i][j] == SquareState.puppy_mower) System.out.print("pm");
+                    else System.out.print("u");
+                }
+            }
+            System.out.println("|");
+        }
+        renderHorizontalBar(charWidth);
+
+        // display the column X-direction identifiers
+        System.out.print(" ");
+        for (i = 0; i < width; i++) {
+            System.out.print(" " + i);
+        }
+        System.out.println("");
     }
 }
