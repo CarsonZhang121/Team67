@@ -7,8 +7,8 @@ import Viewer.SquareState;
 import java.util.Arrays;
 
 public class MowerMap extends Lawn{
-    private int width = 10;
-    private int height = 8;
+    private int width = 20;
+    private int height = 15;
     private SquareState[][] map;
     private int[] fenceLoc; // order: top, right;
 
