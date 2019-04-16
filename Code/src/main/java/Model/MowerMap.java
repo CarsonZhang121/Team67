@@ -97,8 +97,8 @@ public class MowerMap extends Lawn{
 
     public void renderLawn() {
         int i, j;
-        int w = 11;
-        int h = 9;
+        int w = 15;
+        int h = 10;
         int charWidth = 2 * w + 2;
 
         // display the rows of the lawn from top to bottom
