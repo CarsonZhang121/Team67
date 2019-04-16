@@ -25,7 +25,6 @@ public class SimulationMonitor {
     private HashMap<Direction, Integer> yDIR_MAP;
 
     // initialize the simulation.
-    // TO DO: should also set mower's initial locations in MowerMap !
     public void initialize(InputFile input) {
         randGenerator = new Random();
         simulationOn = true;
@@ -193,9 +192,7 @@ public class SimulationMonitor {
 
 
     // TODO: get # of grasses cut
-    public int getCutGrass(){
-        return lawn.getGrassCut();
-    }
+    public int getCutGrass(){ return lawn.getGrassCut();}
 
     // TODO: update the puppy
     public void updatePuppy(){
@@ -282,6 +279,7 @@ public class SimulationMonitor {
 
         totalTurn -= 1;
         lawn.renderLawn(mowerLocations);
+        mowerMap.renderMowermap(mowerLocations);
     }
 
     public void report() {

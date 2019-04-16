@@ -11,7 +11,12 @@ public class Lawn {
     // (2) the # of grass left
 
     public int getGrassCut(){
-        return this.grassCut;
+        for (SquareState[] a : squares)
+            for(SquareState b : a)
+                if(b == SquareState.empty)
+                    this.grassCut += 1;
+
+        return grassCut;
     }
 
     public int getGrassRemain(){

@@ -70,7 +70,7 @@ public class LawnMower {
         x += xOrientation;
         y += yOrientation;
 
-        while (lawn.getSquare(new Location(x, y)) != SquareState.unknown) {
+        while (lawn.getSquare(new Location(x, y)) != SquareState.unknown && steps < 2) {
             SquareState tmp = lawn.getSquare(new Location(x, y));
             if (!(tmp == SquareState.empty || tmp == SquareState.grass)) break;
             if (tmp == SquareState.grass) totalCut += 1;
@@ -82,7 +82,7 @@ public class LawnMower {
         // OK to follow current direction.
         if (totalCut > 0) {
             Action act = new Action("move");
-            act.setMoveAction(Math.min(2, steps), currentDirection);
+            act.setMoveAction(steps, currentDirection);
             return act;
         }
 
@@ -96,7 +96,7 @@ public class LawnMower {
             y += yOrientation;
 
             int tmpCut = 0;
-            while (lawn.getSquare(new Location(x, y)) != SquareState.unknown) {
+            while (lawn.getSquare(new Location(x, y)) != SquareState.unknown && steps < 2) {
                 SquareState tmp = lawn.getSquare(new Location(x, y));
                 if (!(tmp == SquareState.empty || tmp == SquareState.grass)) break;
                 if (tmp == SquareState.grass) tmpCut += 1;
@@ -169,8 +169,7 @@ public class LawnMower {
         if (closestUnknownSquare != Integer.MAX_VALUE && closestUnknownSquare > 0) {
             Action act = new Action("move");
             // if mower is currently at maxDirection, just move for next. Otherwise, should turn direction.
-            // move max two steps per turn.
-            if (currentDirection == maxDirection) act.setMoveAction(Math.min(closestUnknownSquare, 2), maxDirection);
+            if (currentDirection == maxDirection) act.setMoveAction(closestUnknownSquare, maxDirection);
             else
             {
                 cacheAction = new Action("move");
@@ -183,7 +182,7 @@ public class LawnMower {
         // if reach here, all direction of mower is blocked by either fence or crater. Do random move.
         int randomMoveChoice = randGenerator.nextInt(randomDirs.size());
         Direction rDir = randomDirs.get(randomMoveChoice);
-        int step = Math.min(2, randomSteps.get(randomMoveChoice));
+        int step = randomSteps.get(randomMoveChoice);
 
         Action act = new Action("move");
         if (currentDirection == rDir) act.setMoveAction(step, rDir);
