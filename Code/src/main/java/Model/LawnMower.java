@@ -82,7 +82,7 @@ public class LawnMower {
         // OK to follow current direction.
         if (totalCut > 0) {
             Action act = new Action("move");
-            act.setMoveAction(steps, currentDirection);
+            act.setMoveAction(Math.min(2, steps), currentDirection);
             return act;
         }
 
@@ -169,7 +169,8 @@ public class LawnMower {
         if (closestUnknownSquare != Integer.MAX_VALUE && closestUnknownSquare > 0) {
             Action act = new Action("move");
             // if mower is currently at maxDirection, just move for next. Otherwise, should turn direction.
-            if (currentDirection == maxDirection) act.setMoveAction(closestUnknownSquare, maxDirection);
+            // move max two steps per turn.
+            if (currentDirection == maxDirection) act.setMoveAction(Math.min(closestUnknownSquare, 2), maxDirection);
             else
             {
                 cacheAction = new Action("move");
@@ -182,7 +183,7 @@ public class LawnMower {
         // if reach here, all direction of mower is blocked by either fence or crater. Do random move.
         int randomMoveChoice = randGenerator.nextInt(randomDirs.size());
         Direction rDir = randomDirs.get(randomMoveChoice);
-        int step = randomSteps.get(randomMoveChoice);
+        int step = Math.min(2, randomSteps.get(randomMoveChoice));
 
         Action act = new Action("move");
         if (currentDirection == rDir) act.setMoveAction(step, rDir);
