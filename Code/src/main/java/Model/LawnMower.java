@@ -82,7 +82,7 @@ public class LawnMower {
         // OK to follow current direction.
         if (totalCut > 0) {
             Action act = new Action("move");
-            act.setMoveAction(steps, currentDirection);
+            act.setMoveAction(Math.min(2, steps), currentDirection);
             return act;
         }
 
