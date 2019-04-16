@@ -71,24 +71,32 @@ public class RealLawn extends Lawn {
             for (i = 0; i < width; i++) {
                 System.out.print("|");
 
-                boolean isMower = false;
-                for (Location l : mowerLocations) {
-                    if (i == l.getX() && j == l.getY()) {
-                        System.out.print("M");
-                        isMower = true;
-                        break;
-                    }
-                }
+//                boolean isMower = false;
+//                for (Location l : mowerLocations) {
+//                    if (i == l.getX() && j == l.getY()) {
+//                        System.out.print("M");
+//                        isMower = true;
+//                        break;
+//                    }
+//                }
+//
+//                if (isMower) continue;
+//                else {
+//                    if (squares[i][j] == SquareState.empty) System.out.print(" ");
+//                    else if (squares[i][j] == SquareState.grass) System.out.print("g");
+//                    else if (squares[i][j] == SquareState.puppy_empty) System.out.print("p");
+//                    else if (squares[i][j] == SquareState.puppy_grass) System.out.print("pg");
+//                    else if (squares[i][j] == SquareState.puppy_mower) System.out.print("pm");
+//                    else System.out.print("c");
+//                }
 
-                if (isMower) continue;
-                else {
                     if (squares[i][j] == SquareState.empty) System.out.print(" ");
+                    else if (squares[i][j] == SquareState.mower) System.out.print("M");
                     else if (squares[i][j] == SquareState.grass) System.out.print("g");
                     else if (squares[i][j] == SquareState.puppy_empty) System.out.print("p");
                     else if (squares[i][j] == SquareState.puppy_grass) System.out.print("pg");
                     else if (squares[i][j] == SquareState.puppy_mower) System.out.print("pm");
                     else System.out.print("c");
-                }
             }
             System.out.println("|");
         }

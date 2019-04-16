@@ -181,6 +181,8 @@ public class LawnMower {
         }
 
         // if reach here, all direction of mower is blocked by either fence or crater. Do random move.
+        if (randomDirs.size() == 0) return new Action("scan");
+
         int randomMoveChoice = randGenerator.nextInt(randomDirs.size());
         Direction rDir = randomDirs.get(randomMoveChoice);
         int step = Math.min(2, randomSteps.get(randomMoveChoice));
