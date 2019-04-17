@@ -1,3 +1,8 @@
+package Viewer;
+
+import Model.*;
+import Viewer.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,7 +21,7 @@ class LawnPanel extends JPanel
 
     private int borderThickness = 2;
 
-    private String[][] lawn;
+    private RealLawn lawn;
     private int squareSize = 1;
 
     private Image puppyImage;
@@ -27,7 +32,7 @@ class LawnPanel extends JPanel
     private int fontSize = 12;
 
     /*arguments: panel width, panel height, lawn width, lawn height, lawnMap[][], borderThickness, panel margin, fontsize*/
-    public LawnPanel(int width, int height, int ncol, int nrow, String[][] newLawn, int t, int m, int f)
+    public LawnPanel(int width, int height, int ncol, int nrow, RealLawn newLawn, int t, int m, int f)
     {
         panelW = width;
         panelH = height;
@@ -42,12 +47,15 @@ class LawnPanel extends JPanel
 
         LoadImages();
 
-        lawn = new String[nCol][nRow];
+        lawn = new RealLawn();
         for (int i=0;i<nCol;i++)
         {
             for(int j=0;j<nRow;j++)
             {
-                lawn[i][j]=newLawn[i][j];
+                Location loc = new Location();
+                loc.setX(i);
+                loc.setY(j);
+                lawn.setSquare(loc, newLawn.getSquareState(loc));
             }
         }
     }
@@ -79,7 +87,7 @@ class LawnPanel extends JPanel
     }
 
     //update lawn map, size can change
-    public void Update(int lawnCol, int lawnRow, String[][] newLawn)
+    public void Update(int lawnCol, int lawnRow, RealLawn newLawn)
     {
         //repaint();
         boolean sizeChanged = (lawnCol != nCol || lawnRow != nRow);
@@ -93,13 +101,16 @@ class LawnPanel extends JPanel
             LoadImages();
         }
 
-        lawn = new String[nCol][nRow];
+        lawn = new RealLawn(nCol, nRow);
         //copy to lawn
         for (int i=0;i<nCol;i++)
         {
             for(int j=0;j<nRow;j++)
             {
-                lawn[i][j]=newLawn[i][j];
+                Location loc = new Location();
+                loc.setX(i);
+                loc.setY(j);
+                lawn.setSquare(loc, newLawn.getSquareState(loc));;
             }
         }
 
@@ -158,27 +169,30 @@ class LawnPanel extends JPanel
         //draw lawn squares
         for (int i = 0; i < nCol; i++) {
             for (int j = 0; j < nRow; j++) {
-                switch (lawn[i][j])
+                Location loc = new Location();
+                loc.setX(i);
+                loc.setY(j);
+                switch (lawn.getSquareState(loc))
                 {
-                    case "grass":
+                    case grass:
                         drawSquare(g, i, j, new Color(0,153,0), null);
                         break;
-                    case "empty":
+                    case empty:
                         drawSquare(g, i, j, Color.white, null);
                         break;
-                    case "puppy_grass":
+                    case puppy_grass:
                         drawSquare(g, i, j, new Color(0,153,0), puppyImage);
                         break;
-                    case "puppy_empty":
+                    case puppy_empty:
                         drawSquare(g, i, j, Color.white, puppyImage);
                         break;
-                    case "mower":
+                    case mower:
                         drawSquare(g, i, j, Color.white, mowerImage);
                         break;
-                    case "puppy_mower":
+                    case puppy_mower:
                         drawSquare(g, i, j, Color.white, puppymowerImage);
                         break;
-                    case "crater":
+                    case crater:
                         drawSquare(g, i, j, Color.white, craterImage);
                         break;
 
