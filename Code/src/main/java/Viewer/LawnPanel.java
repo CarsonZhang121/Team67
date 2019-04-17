@@ -1,7 +1,8 @@
 package Viewer;
 
 import Model.*;
-import Viewer.*;
+import Controller.*;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +22,8 @@ class LawnPanel extends JPanel
 
     private int borderThickness = 2;
 
+
+    //private String[][] lawn;
     private RealLawn lawn;
     private int squareSize = 1;
 
@@ -47,15 +50,13 @@ class LawnPanel extends JPanel
 
         LoadImages();
 
-        lawn = new RealLawn();
+        lawn = new RealLawn(ncol, nrow);
         for (int i=0;i<nCol;i++)
         {
             for(int j=0;j<nRow;j++)
             {
-                Location loc = new Location();
-                loc.setX(i);
-                loc.setY(j);
-                lawn.setSquare(loc, newLawn.getSquareState(loc));
+                Location location = new Location(i, j);
+                lawn.setSquare(location, newLawn.getSquareState(location));
             }
         }
     }
@@ -86,8 +87,9 @@ class LawnPanel extends JPanel
         }
     }
 
+
     //update lawn map, size can change
-    public void Update(int lawnCol, int lawnRow, RealLawn newLawn)
+    public void update(int lawnCol, int lawnRow, RealLawn newLawn)
     {
         //repaint();
         boolean sizeChanged = (lawnCol != nCol || lawnRow != nRow);
@@ -107,10 +109,8 @@ class LawnPanel extends JPanel
         {
             for(int j=0;j<nRow;j++)
             {
-                Location loc = new Location();
-                loc.setX(i);
-                loc.setY(j);
-                lawn.setSquare(loc, newLawn.getSquareState(loc));;
+                Location location = new Location(i, j);
+                lawn.setSquare(location, newLawn.getSquareState(location));
             }
         }
 
@@ -169,10 +169,9 @@ class LawnPanel extends JPanel
         //draw lawn squares
         for (int i = 0; i < nCol; i++) {
             for (int j = 0; j < nRow; j++) {
-                Location loc = new Location();
-                loc.setX(i);
-                loc.setY(j);
-                switch (lawn.getSquareState(loc))
+                SquareState currentSquareState = lawn.getSquareState(new Location(i, j));
+                if (currentSquareState == SquareState.grass)
+                switch (currentSquareState)
                 {
                     case grass:
                         drawSquare(g, i, j, new Color(0,153,0), null);

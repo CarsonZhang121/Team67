@@ -7,6 +7,16 @@ public class RealLawn extends Lawn {
     private int width;
     private int height;
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+
+
     public RealLawn() {
     }
 
