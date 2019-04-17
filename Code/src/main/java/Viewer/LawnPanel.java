@@ -170,7 +170,6 @@ class LawnPanel extends JPanel
         for (int i = 0; i < nCol; i++) {
             for (int j = 0; j < nRow; j++) {
                 SquareState currentSquareState = lawn.getSquareState(new Location(i, j));
-                if (currentSquareState == SquareState.grass)
                 switch (currentSquareState)
                 {
                     case grass:
