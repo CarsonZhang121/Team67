@@ -16,6 +16,7 @@ public class SimulationMonitor {
     private int totalSize;
     private int totalGrass;
     private int stoppedMowers;
+    private int crashedMowers; // for debug
     private boolean simulationOn;
     private int totalTurn;
     private int stallTurn;
@@ -126,8 +127,8 @@ public class SimulationMonitor {
             if (status.toString().substring(0, 5).equals("puppy")) {
                 mowerLocations[mowerID] = new Location(x, y); // mower move into puppy's location.
                 lawn.setSquare(mowerLocations[mowerID], SquareState.puppy_mower);
-                mowerMap.setSquare(mowerLocations[mowerID], SquareState.puppy_mower, mowerDirections[mowerID]);
-                mowerList[mowerID].setStallTurn(stallTurn);
+                mowerMap.setSquare(mowerLocations[mowerID], SquareState.mower, mowerDirections[mowerID]); // ignore puppy in mowermap.
+//                mowerList[mowerID].setStallTurn(stallTurn); // no need to stall
 
                 // set previous location to empty.
                 Location prevLoc = new Location(x-xOrientation, y-yOrientation);
@@ -137,7 +138,7 @@ public class SimulationMonitor {
                 }
                 else if (lawn.getSquareState(prevLoc) == SquareState.puppy_mower) {
                     lawn.setSquare(prevLoc, SquareState.puppy_empty);
-                    mowerMap.setSquare(prevLoc, SquareState.puppy_empty, mowerDirections[mowerID]);
+                    mowerMap.setSquare(prevLoc, SquareState.empty, mowerDirections[mowerID]); // ignore puppy in mowermap.
                 }
                 return;
             }
@@ -151,7 +152,7 @@ public class SimulationMonitor {
             }
             else if (lawn.getSquareState(prevLoc) == SquareState.puppy_mower) {
                 lawn.setSquare(prevLoc, SquareState.puppy_empty);
-                mowerMap.setSquare(prevLoc, SquareState.puppy_empty, mowerDirections[mowerID]);
+                mowerMap.setSquare(prevLoc, SquareState.empty, mowerDirections[mowerID]); // ignore puppy in mowermap.
             }
 
             if (!lawn.cutSquare(new Location(x, y))) {
@@ -162,6 +163,7 @@ public class SimulationMonitor {
                     mowerMap.setSquare(new Location(x, y), SquareState.crater, mowerDirections[mowerID]);
                 mowerList[mowerID].setCurrentStatus(MowerStatus.crashed);
                 stoppedMowers += 1;
+                crashedMowers += 1; // for debug
                 return;
             } else {
                 // set current location to mower.
@@ -232,10 +234,10 @@ public class SimulationMonitor {
                 else {
                     // check the mower list.
                     lawn.setSquare(newLoc, SquareState.puppy_mower);
-                    for (int j = 0; j < mowerList.length; j++) {
-                        if (x == mowerLocations[j].getX() && y == mowerLocations[j].getY())
-                            mowerList[j].setStallTurn(stallTurn);
-                    }
+//                    for (int j = 0; j < mowerList.length; j++) {
+//                        if (x == mowerLocations[j].getX() && y == mowerLocations[j].getY())
+//                            mowerList[j].setStallTurn(stallTurn);
+//                    }
                 }
                 // update previous location.
                 if (lawn.getSquareState(currentLoc) == SquareState.puppy_grass) lawn.setSquare(currentLoc, SquareState.grass);
@@ -266,6 +268,7 @@ public class SimulationMonitor {
                 mowerList[i].setStallTurn(mowerList[i].getStallTurn() - 1);
                 continue;
             }
+            if (lawn.getSquareState(mowerLocations[i]) == SquareState.puppy_mower) continue; // puppy and mower in the same square.
             System.out.print("Mower at Location: ");
             System.out.println(String.format("(%d, %d)", mowerLocations[i].getX(), mowerLocations[i].getY()));
             Action act = mowerList[i].nextAction(mowerMap);
@@ -289,6 +292,10 @@ public class SimulationMonitor {
             simulationOn = false;
             return;
         }
+
+        System.out.println(String.format("Stopped Mower: %d", stoppedMowers));
+        System.out.println(String.format("Crashed Mower: %d", crashedMowers));
+
         // update puppy
         updatePuppy();
 

@@ -74,6 +74,17 @@ public class MowerMap extends Lawn{
         int x = loc.getX();
         int y = loc.getY();
 
+        // ignore puppy.
+        for (int i = 0; i < surs.length; i++) {
+            if (surs[i].toString().substring(0, 5).equals("puppy")) {
+                if (surs[i] == SquareState.puppy_grass)
+                    surs[i] = SquareState.grass;
+                else if (surs[i] == SquareState.puppy_mower)
+                    surs[i] = SquareState.mower;
+                else surs[i] = SquareState.empty;
+            }
+        }
+
         // setSquare will handle out of bound.
         setSquare(new Location(x, y+1), surs[0], Direction.north); // North
         setSquare(new Location(x+1, y+1), surs[1], Direction.northeast); // NorthEast
