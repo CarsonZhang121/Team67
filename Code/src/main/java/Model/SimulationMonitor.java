@@ -25,6 +25,15 @@ public class SimulationMonitor {
     private HashMap<Direction, Integer> xDIR_MAP;
     private HashMap<Direction, Integer> yDIR_MAP;
 
+    public LawnMower[] getMowerList() {
+        return mowerList;
+    }
+
+    public RealLawn getLawn() {
+        return lawn;
+    }
+
+
     // initialize the simulation.
     public void initialize(InputFile input) {
         randGenerator = new Random();

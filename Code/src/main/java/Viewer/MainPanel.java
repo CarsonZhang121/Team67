@@ -2,12 +2,18 @@
 package Viewer;
 
 
+import Model.LawnMower;
+import Model.SimulationMonitor;
+
 public class MainPanel extends javax.swing.JFrame {
 
     /**
      * Creates new form MainJFrame
+     *
+     * @param simulationMonitor
      */
-    public MainPanel() {
+    public MainPanel(SimulationMonitor simulationMonitor) {
+        this.simulationMonitor = simulationMonitor;
         initComponents();
     }
 
@@ -21,7 +27,7 @@ public class MainPanel extends javax.swing.JFrame {
     private void initComponents() {
 
         btnPanel = new javax.swing.JPanel();
-        nexgBtn = new javax.swing.JButton();
+        nextBtn = new javax.swing.JButton();
         stopBtn = new javax.swing.JButton();
         forwardBtn = new javax.swing.JButton();
         txtPanel1 = new javax.swing.JPanel();
@@ -31,14 +37,18 @@ public class MainPanel extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         currentLawn = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        currentLawn1 = new javax.swing.JTable();
+        currentLawnPanel = new LawnPanel(600, 600, simulationMonitor.getLawn().getWidth(), simulationMonitor.getLawn().getHeight(), simulationMonitor.getLawn(), 5, 20, 12);
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        nexgBtn.setText("Next");
-        nexgBtn.setToolTipText("");
-        nexgBtn.setActionCommand("");
+        nextBtn.setText("Next");
+        nextBtn.setActionCommand("");
+        nextBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextBtnActionPerformed(evt);
+            }
+        });
 
         stopBtn.setText("Stop");
         stopBtn.setActionCommand("");
@@ -62,7 +72,7 @@ public class MainPanel extends javax.swing.JFrame {
                 btnPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(btnPanelLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(nexgBtn)
+                                .addComponent(nextBtn)
                                 .addGap(28, 28, 28)
                                 .addComponent(stopBtn)
                                 .addGap(31, 31, 31)
@@ -73,7 +83,7 @@ public class MainPanel extends javax.swing.JFrame {
                         .addGroup(btnPanelLayout.createSequentialGroup()
                                 .addGap(11, 11, 11)
                                 .addGroup(btnPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(nexgBtn)
+                                        .addComponent(nextBtn)
                                         .addComponent(stopBtn)
                                         .addComponent(forwardBtn)))
         );
@@ -115,14 +125,18 @@ public class MainPanel extends javax.swing.JFrame {
                                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
+
+        //====================
+        // mower status
+        // TODO: add an update function to update the Mower status
         currentLawn.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
+                new Object[][]{
                         {"", null, null, null},
                         {null, null, null, null},
                         {null, null, null, null},
                         {null, null, null, null}
                 },
-                new String [] {
+                new String[]{
                         "Mower ID", "State", "Next Action", "# of remaining turns"
                 }
         ));
@@ -131,20 +145,12 @@ public class MainPanel extends javax.swing.JFrame {
         jScrollPane1.setViewportView(currentLawn);
         currentLawn.getAccessibleContext().setAccessibleParent(currentLawn);
 
-        currentLawn1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                        {"", null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String [] {
-                        "1", "2", "3", "4"
-                }
-        ));
-        currentLawn1.setAutoscrolls(false);
-        currentLawn1.setRowHeight(32);
-        jScrollPane2.setViewportView(currentLawn1);
+
+        // mower status
+        //====================
+
+        currentLawnPanel.setAutoscrolls(false);
+        jScrollPane2.setViewportView(currentLawnPanel);
 
         jLabel1.setText("Mower State");
 
@@ -192,30 +198,43 @@ public class MainPanel extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>
+    }
 
     private void stopBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        LawnMower[] mowerList = simulationMonitor.getMowerList();
+        for (int i = 0; i < mowerList.length; i++) {
+            mowerList[i].setCurrentStatus(MowerStatus.turnedOff);
+        }
+        // TODO: get an alert window to say Simulation stopped?
     }
 
     private void forwardBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        while (simulationMonitor.issimulationOn()) {
+            simulationMonitor.runOneTurn();
+            currentLawnPanel.update(simulationMonitor.getLawn().getWidth(), simulationMonitor.getLawn().getHeight(), simulationMonitor.getLawn());
+        }
+    }
+
+    private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {
+        simulationMonitor.runOneTurn();
+        currentLawnPanel.update(simulationMonitor.getLawn().getWidth(), simulationMonitor.getLawn().getHeight(), simulationMonitor.getLawn());
     }
 
 
     // Variables declaration - do not modify
     private javax.swing.JPanel btnPanel;
     private javax.swing.JTable currentLawn;
-    private javax.swing.JTable currentLawn1;
+    private LawnPanel currentLawnPanel;
     private java.awt.Label currentState;
     private javax.swing.JButton forwardBtn;
     private java.awt.Label grassState;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JButton nexgBtn;
+    private javax.swing.JButton nextBtn;
     private javax.swing.JButton stopBtn;
     private javax.swing.JPanel txtPanel1;
     private javax.swing.JPanel txtPanel2;
     // End of variables declaration
+    private SimulationMonitor simulationMonitor;
 }
