@@ -12,6 +12,7 @@ public class SimulationMonitor {
     private Puppy[] puppyList;
     private LawnMower[] mowerList;
     private RealLawn lawn;
+    private RealLawn initialLawn;
     private MowerMap mowerMap;
     private int totalSize;
     private int totalGrass;
@@ -24,6 +25,10 @@ public class SimulationMonitor {
 
     private HashMap<Direction, Integer> xDIR_MAP;
     private HashMap<Direction, Integer> yDIR_MAP;
+
+    public RealLawn getInitialLawn() {
+        return initialLawn;
+    }
 
     public LawnMower[] getMowerList() {
         return mowerList;
@@ -39,6 +44,7 @@ public class SimulationMonitor {
         randGenerator = new Random();
         simulationOn = true;
         lawn = new RealLawn(input.getLawnWidth(), input.getLawnHeight());
+        initialLawn = new RealLawn(input.getLawnWidth(), input.getLawnHeight());
         mowerMap = new MowerMap();
         mowerMap.initializeMap();
         lawn.squares = new SquareState[input.getLawnWidth()][input.getLawnHeight()];
@@ -56,6 +62,7 @@ public class SimulationMonitor {
                 lawn.squares[i][j] = SquareState.grass;
             }
         }
+
 
         mowerList = new LawnMower[mowerLocations.length];
         for (int i = 0; i < mowerLocations.length; i++) {
@@ -77,6 +84,20 @@ public class SimulationMonitor {
             puppyList[i] = new Puppy(stayPercent);
             puppyList[i].setPuppyLocation(puppyLocations[i]);
         }
+
+        for(int i = 0; i < input.getLawnWidth(); i++){
+            for(int j = 0; j < input.getLawnHeight(); j++){
+                initialLawn.squares[i][j] = lawn.squares[i][j];
+            }
+        }
+
+    }
+
+
+    public void reset() {
+        lawn = initialLawn;
+
+        // TODO: how to make everything back to the initial status?
     }
 
     public SimulationMonitor() {
