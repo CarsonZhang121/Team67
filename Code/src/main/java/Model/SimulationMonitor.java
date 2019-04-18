@@ -21,9 +21,20 @@ public class SimulationMonitor {
     private int totalTurn;
     private int stallTurn;
     private double stayPercent;
+    private int currentMowerIdx;
+    private int currentPuppyIdx;
 
     private HashMap<Direction, Integer> xDIR_MAP;
     private HashMap<Direction, Integer> yDIR_MAP;
+
+    public LawnMower[] getMowerList() {
+        return mowerList;
+    }
+
+    public RealLawn getLawn() {
+        return lawn;
+    }
+
 
     // initialize the simulation.
     public void initialize(InputFile input) {
@@ -41,6 +52,8 @@ public class SimulationMonitor {
         stallTurn = input.getStallTurn();
         stayPercent = input.getStayPercent();
         stoppedMowers = 0;
+        currentMowerIdx = 0;
+        currentPuppyIdx = 0;
 
         for(int i = 0; i < input.getLawnWidth(); i++){
             for(int j = 0; j < input.getLawnHeight(); j++){
@@ -251,10 +264,106 @@ public class SimulationMonitor {
         return simulationOn;
     }
 
-    public void runOneTurn() {
-        if (totalTurn == 114) {
-            System.out.println("stop");
+    public void nextMove() {
+        if (totalTurn == 0) {
+            simulationOn = false;
+            return;
         }
+
+        if (stoppedMowers == mowerList.length) {
+            simulationOn = false;
+            return;
+        }
+
+        while (currentMowerIdx < mowerList.length) {
+            if (mowerList[currentMowerIdx].getCurrentStatus() == MowerStatus.crashed ||
+                    mowerList[currentMowerIdx].getCurrentStatus() == MowerStatus.turnedOff) {
+                currentMowerIdx += 1;
+                continue;
+            }
+            if (mowerList[currentMowerIdx].getCurrentStatus() == MowerStatus.stalled) {
+                mowerList[currentMowerIdx].setStallTurn(mowerList[currentMowerIdx].getStallTurn() - 1);
+                currentMowerIdx += 1;
+                continue;
+            }
+            if (lawn.getSquareState(mowerLocations[currentMowerIdx]) == SquareState.puppy_mower) {
+                currentMowerIdx += 1;
+                continue;
+            }
+            break;
+        }
+        // move mower.
+        if (currentMowerIdx != mowerList.length) {
+            System.out.print("Mower at Location: ");
+            System.out.println(String.format("(%d, %d)", mowerLocations[currentMowerIdx].getX(), mowerLocations[currentMowerIdx].getY()));
+            Action act = mowerList[currentMowerIdx].nextAction(mowerMap);
+            System.out.println(String.format("Action: %s", act.getName()));
+            if (act.getName().equals("move")) {
+                moveMower(currentMowerIdx, act);
+                System.out.println(String.format("Current direction: %s", mowerDirections[currentMowerIdx].toString()));
+                System.out.println(String.format("Step size: %d", act.getStepSize()));
+                System.out.println(String.format("Next direction: %s", act.getDirection().toString()));
+            }
+            else if (act.getName().equals("scan")) {
+                SquareState[] sur = scan(mowerLocations[currentMowerIdx]);
+                mowerMap.updateMapFromScan(mowerLocations[currentMowerIdx], sur);
+            }
+            else {
+                mowerList[currentMowerIdx].setCurrentStatus(MowerStatus.turnedOff);
+                stoppedMowers += 1;
+            }
+            currentMowerIdx += 1;
+        } else { // move puppy.
+            // if iterated both mower and puppy, finish one turn.
+            if (currentMowerIdx == mowerList.length && currentPuppyIdx == puppyList.length) {
+                currentMowerIdx = 0;
+                currentPuppyIdx = 0;
+                totalTurn -= 1;
+                System.out.println(String.format("Current Turn: %d", totalTurn));
+                System.out.println(String.format("Stopped Mower: %d", stoppedMowers));
+                System.out.println(String.format("Crashed Mower: %d", crashedMowers));
+                lawn.renderLawn(mowerLocations);
+                mowerMap.renderLawn();
+                return;
+            }
+            String action = puppyList[currentPuppyIdx].nextAction();
+            if (action != "stay") {
+                // scan surrounding
+                Location currentLoc = puppyList[currentPuppyIdx].getPuppyLocation();
+                SquareState[] sur = scan(currentLoc);
+                int randomMoveChoice = randGenerator.nextInt(sur.length);
+                // find a safe random location.
+                while (!(sur[randomMoveChoice] == SquareState.empty ||
+                        sur[randomMoveChoice] == SquareState.grass ||
+                        sur[randomMoveChoice] == SquareState.mower)) {
+                    randomMoveChoice = randGenerator.nextInt(sur.length);
+                }
+                Direction[] dirs = new Direction[]{Direction.north, Direction.northeast, Direction.east,
+                        Direction.southeast, Direction.south, Direction.southwest, Direction.west,
+                        Direction.northwest};
+
+                int xOrientation = xDIR_MAP.get(dirs[randomMoveChoice]);
+                int yOrientation = yDIR_MAP.get(dirs[randomMoveChoice]);
+                int x = currentLoc.getX() + xOrientation;
+                int y = currentLoc.getY() + yOrientation;
+                Location newLoc = new Location(x, y);
+                puppyList[currentPuppyIdx].setPuppyLocation(newLoc);
+                // update the real lawn based on puppy movement.
+                // update the new location.
+                if (lawn.getSquareState(newLoc) == SquareState.empty) lawn.setSquare(newLoc, SquareState.puppy_empty);
+                else if (lawn.getSquareState(newLoc) == SquareState.grass) lawn.setSquare(newLoc, SquareState.puppy_grass);
+                else lawn.setSquare(newLoc, SquareState.puppy_mower);
+                // update previous location.
+                if (lawn.getSquareState(currentLoc) == SquareState.puppy_grass) lawn.setSquare(currentLoc, SquareState.grass);
+                else if (lawn.getSquareState(currentLoc) == SquareState.puppy_empty) lawn.setSquare(currentLoc, SquareState.empty);
+                else if (lawn.getSquareState(currentLoc) == SquareState.puppy_mower) lawn.setSquare(currentLoc, SquareState.mower);
+            }
+            currentPuppyIdx += 1;
+        }
+    }
+
+    public void runOneTurn() {
+
         System.out.println(totalTurn);
         if (totalTurn == 0) {
             simulationOn = false;
