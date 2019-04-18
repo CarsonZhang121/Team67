@@ -23,6 +23,7 @@ public class RealLawn extends Lawn {
     public RealLawn(int width, int height) {
         this.width = width;
         this.height = height;
+        squares = new SquareState[width][height];
     }
 
     public RealLawn(int width) {
