@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="04a4610d-1e86-4990-82db-649088e0dd52" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/1.iml" afterDir="false" />
+    <list default="true" id="aadcd3d7-6471-4d6a-9138-97455cb0b634" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controller/run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/run.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Model/SimulationMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/SimulationMonitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Viewer/LawnPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Viewer/MainPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/run.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/run.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/SimulationMonitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/SimulationMonitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Viewer/LawnPanel$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Viewer/LawnPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Viewer/MainPanel$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Viewer/MainPanel$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Viewer/MainPanel$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Viewer/MainPanel.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,21 +25,30 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Controller/run.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+            <state relative-caret-position="219">
+              <caret line="19" selection-start-line="19" selection-start-column="2" selection-end-line="21" selection-end-column="11" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1705#1837#0" expanded="true" />
+                <element signature="e#1836#1837#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Model/MowerMap.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/GUI/MainPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="76" column="24" selection-start-line="76" selection-start-column="24" selection-end-line="76" selection-end-column="24" />
+            <state relative-caret-position="167">
+              <caret line="43" selection-start-line="43" selection-end-line="43" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1281#1461#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -37,11 +56,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Model/SimulationMonitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="286" column="25" lean-forward="true" selection-start-line="286" selection-start-column="25" selection-end-line="286" selection-end-column="25" />
+            <state relative-caret-position="371">
+              <caret line="298" selection-start-line="298" selection-end-line="298" />
               <folding>
-                <element signature="method#updatePuppy#0;class#SimulationMonitor#0" />
+                <element signature="e#17506#17538#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Model/Lawn.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="22" selection-start-line="6" selection-end-line="7" />
             </state>
           </provider>
         </entry>
@@ -54,17 +82,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/scenario5.csv" />
-        <option value="$PROJECT_DIR$/scenario6.csv" />
-        <option value="$PROJECT_DIR$/src/main/java/Model/MowerMap.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Controller/run.java" />
         <option value="$PROJECT_DIR$/src/main/java/Model/SimulationMonitor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/GUI/MainPanel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Controller/run.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="934" />
-    <option name="width" value="1633" />
+    <option name="x" value="1028" />
+    <option name="width" value="1539" />
     <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -73,8 +99,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -114,6 +138,14 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="GUI" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Code" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="Model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -128,19 +160,16 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555479101979" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../6300sdp/IndividualProject/filesummary_D3" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\OMSCS\6310\A6\Code" />
-    </key>
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555654442542" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
+    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -158,7 +187,7 @@
     <configuration name="run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Controller.run" />
       <module name="1" />
-      <option name="PROGRAM_PARAMETERS" value="scenario6.csv" />
+      <option name="PROGRAM_PARAMETERS" value="scenario5.csv" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="Controller.*" />
@@ -180,113 +209,110 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="04a4610d-1e86-4990-82db-649088e0dd52" name="Default Changelist" comment="" />
-      <created>1555394935015</created>
+      <changelist id="aadcd3d7-6471-4d6a-9138-97455cb0b634" name="Default Changelist" comment="" />
+      <created>1555652884521</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1555394935015</updated>
+      <updated>1555652884521</updated>
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="934" y="0" width="1633" height="1047" extended-state="0" />
+    <frame x="1028" y="0" width="1539" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20406866" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="UI Designer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23326571" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" weight="0.32932165" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.25273523" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.26914662" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.13785557" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.09409191" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39824945" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32932165" />
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Maven" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Palette&#9;" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Maven" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Capture Analysis" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20406866" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20350109" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.1487965" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32932165" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Maven" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Capture Analysis" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-    </layout-to-restore>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GUI/MainPanel.java</url>
+          <line>236</line>
+          <properties />
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/scenario1.csv">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scenario5.csv">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Model/RealLawn.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="2" selection-start-line="22" selection-start-column="2" selection-end-line="22" selection-end-column="2" />
+        <state relative-caret-position="254">
+          <caret line="39" column="19" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scenario6.csv">
+    <entry file="file://$PROJECT_DIR$/src/main/java/GUI/LawnPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="4" lean-forward="true" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+        <state relative-caret-position="-2446">
+          <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Model/MowerMap.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Model/Lawn.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="76" column="24" selection-start-line="76" selection-start-column="24" selection-end-line="76" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Model/SimulationMonitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="286" column="25" lean-forward="true" selection-start-line="286" selection-start-column="25" selection-end-line="286" selection-end-column="25" />
-          <folding>
-            <element signature="method#updatePuppy#0;class#SimulationMonitor#0" />
-          </folding>
+        <state relative-caret-position="102">
+          <caret line="6" column="22" selection-start-line="6" selection-end-line="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Controller/run.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+        <state relative-caret-position="219">
+          <caret line="19" selection-start-line="19" selection-start-column="2" selection-end-line="21" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1705#1837#0" expanded="true" />
+            <element signature="e#1836#1837#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Model/SimulationMonitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="298" selection-start-line="298" selection-end-line="298" />
+          <folding>
+            <element signature="e#17506#17538#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/GUI/MainPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1281#1461#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -347,7 +373,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

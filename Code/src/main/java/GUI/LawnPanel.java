@@ -1,7 +1,9 @@
-package Viewer;
+package GUI;
 
 import Model.*;
 import Controller.*;
+import Viewer.Location;
+import Viewer.SquareState;
 
 
 import javax.swing.*;
