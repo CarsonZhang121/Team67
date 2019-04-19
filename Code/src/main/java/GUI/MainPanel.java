@@ -7,27 +7,31 @@ import Viewer.MowerStatus;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class MainPanel extends JFrame {
 
     public MainPanel(SimulationMonitor simulationMonitor) {
         this.simulationMonitor = simulationMonitor;
+        this.mowerCount = simulationMonitor.getMowerList().length;
+        this.mowerTableData = new String[mowerCount][5];
+        this.mowerList = simulationMonitor.getMowerList();
         initComponents();
     }
 
     private void initComponents() {
 
         btnPanel = new JPanel();
-        nextBtn = new JButton();
+        nextStepBtn = new JButton();
         stopBtn = new JButton();
-        resetBtn = new JButton();
+//        nextTurnBtn = new JButton();
         forwardBtn = new JButton();
         txtPanel1 = new JPanel();
-        currentState = new java.awt.Label();
+        currentState = new Label();
         txtPanel2 = new JPanel();
         txtPanel3 = new JPanel();
-        cutGrassState = new java.awt.Label();
-        remainGrassState = new java.awt.Label();
+        cutGrassState = new Label();
+        remainGrassState = new Label();
         mowerStatusPanel = new JScrollPane();
         currentLawn = new JTable();
         realTimeLawnPanel = new JScrollPane();
@@ -36,37 +40,37 @@ public class MainPanel extends JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        nextBtn.setText("Next");
-        nextBtn.setActionCommand("");
-        nextBtn.addActionListener(new java.awt.event.ActionListener() {
+        nextStepBtn.setText("Next Step");
+        nextStepBtn.setActionCommand("");
+        nextStepBtn.addActionListener(new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nextBtnActionPerformed(evt);
+                nextStepBtnActionPerformed(evt);
             }
         });
 
         stopBtn.setText("Stop");
         stopBtn.setActionCommand("");
-        stopBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        stopBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 stopBtnActionPerformed(evt);
             }
         });
 
         forwardBtn.setText("Fast-Forward");
         forwardBtn.setActionCommand("");
-        forwardBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        forwardBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 forwardBtnActionPerformed(evt);
             }
         });
 
-        resetBtn.setText("Reset");
-        resetBtn.setActionCommand("");
-        resetBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resetBtnActionPerformed(evt);
-            }
-        });
+//        nextTurnBtn.setText("Next Turn");
+//        nextTurnBtn.setActionCommand("");
+//        nextTurnBtn.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent evt) {
+//                nextTurnBtnActionPerformed(evt);
+//            }
+//        });
 
 
         GroupLayout btnPanelLayout = new GroupLayout(btnPanel);
@@ -75,87 +79,63 @@ public class MainPanel extends JFrame {
                 btnPanelLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addGroup(btnPanelLayout.createSequentialGroup()
                                 .addGap(20, 25, 40)
-                                .addComponent(nextBtn)
+                                .addComponent(nextStepBtn)
                                 .addGap(20, 25, 40)
                                 .addComponent(stopBtn)
                                 .addGap(20, 25, 40)
-                                .addComponent(forwardBtn)
-                                .addGap(20, 25, 40)
-                                .addComponent(resetBtn))
+                                .addComponent(forwardBtn))
+//                                .addGap(20, 25, 40)
+//                                .addComponent(nextTurnBtn))
         );
         btnPanelLayout.setVerticalGroup(
                 btnPanelLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addGroup(btnPanelLayout.createSequentialGroup()
                                 .addGap(11, 11, 11)
                                 .addGroup(btnPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(nextBtn)
+                                        .addComponent(nextStepBtn)
                                         .addComponent(stopBtn)
-                                        .addComponent(resetBtn)
+//                                        .addComponent(nextTurnBtn)
                                         .addComponent(forwardBtn)))
         );
 
-        currentState.setText("Turns Done: ");
+        currentState.setText("Turns Done:   " + (simulationMonitor.getInitialTotalTurn() - simulationMonitor.getTotalTurn()));
 
         generateTxtPanelLayout(txtPanel1, currentState);
 
-        cutGrassState.setText("Grass Cut: ");
+        cutGrassState.setText("Grass Cut:      " + simulationMonitor.getCutGrass());
 
         generateTxtPanelLayout(txtPanel2, cutGrassState);
 
-        remainGrassState.setText("Grass Remaining: ");
+        remainGrassState.setText("Grass Left: " + (simulationMonitor.getTotalGrass() - simulationMonitor.getCutGrass() + simulationMonitor.getTotalCrater()));
 
         generateTxtPanelLayout(txtPanel3, remainGrassState);
 
 
-        //====================
-        // mower status
-        // TODO: add an update function to update the Mower status
-
         String[] columnNames = new String[]{
-                "Mower ID", "Current Status", "Current Direction", "Next Action"
+                "Mower ID", "Status", "Direction", "Next Action", "Turns to stall"
         };
 
-        int mowerCount = simulationMonitor.getMowerList().length;
-        String[][] data = new String[mowerCount][4];
 
+        //Mower Status table
         //initialize the mower status table
-
+        jLabel1.setText("Mower State");
         for (int i = 0; i < mowerCount; i++) {
-            data[i][0] = "Mower " + (i + 1);
+            mowerTableData[i][0] = "Mower " + (i + 1);
         }
         for (int i = 0; i < mowerCount; i++) {
-            data[i][1] = "N/A";
-            data[i][2] = "North";
-            data[i][3] = "Turned Off";
+            mowerTableData[i][1] = "N/A";
+            mowerTableData[i][2] = "North";
+            mowerTableData[i][3] = "Turned Off";
+            mowerTableData[i][4] = Integer.toString(mowerList[i].getStallTurn());
         }
-
-        JTable mowerStatusTable = new JTable(data, columnNames);
+        JTable mowerStatusTable = new JTable(mowerTableData, columnNames);
         mowerStatusPanel.setViewportView(mowerStatusTable);
 
-//        currentLawn.setModel(new table.DefaultTableModel(
-//                new Object[][]{
-//                        {"", null, null, null},
-//                        {null, null, null, null},
-//                        {null, null, null, null},
-//                        {null, null, null, null}
-//                },
-//                new String[]{
-//                        "Mower ID", "Current Status", "Current Direction", "Next Action"
-//                }
-//        ));
-//        currentLawn.setAutoscrolls(false);
-//        currentLawn.setRowHeight(24);
-//        mowerStatusPane1.setViewportView(currentLawn);
-//        currentLawn.getAccessibleContext().setAccessibleParent(currentLawn);
 
-
-        // mower status
-        //====================
-
+        // real time lawn map
         currentLawnPanel.setAutoscrolls(false);
         realTimeLawnPanel.setViewportView(currentLawnPanel);
 
-        jLabel1.setText("Mower State");
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,24 +206,35 @@ public class MainPanel extends JFrame {
     private void forwardBtnActionPerformed(java.awt.event.ActionEvent evt) {
         while (simulationMonitor.issimulationOn()) {
             simulationMonitor.nextMove();
-            currentLawnPanel.update(simulationMonitor.getLawn().getWidth(), simulationMonitor.getLawn().getHeight(), simulationMonitor.getLawn());
-            cutGrassState.setText("# grass cut  " + simulationMonitor.getCutGrass() + "\n   # grass remaining");
+            updateGUI();
         }
     }
 
-    private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {
+    private void nextStepBtnActionPerformed(java.awt.event.ActionEvent evt) {
         simulationMonitor.nextMove();
-        currentLawnPanel.update(simulationMonitor.getLawn().getWidth(), simulationMonitor.getLawn().getHeight(), simulationMonitor.getLawn());
-        cutGrassState.setText("# grass cut  " + simulationMonitor.getCutGrass() + "\n   # grass remaining");
+        updateGUI();
     }
 
-    private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {
-//        simulationMonitor.reset();
-//        currentLawnPanel.update(simulationMonitor.getLawn().getWidth(), simulationMonitor.getLawn().getHeight(), simulationMonitor.getInitialLawn());
-    }
+//    private void nextTurnBtnActionPerformed(java.awt.event.ActionEvent evt) {
+////        simulationMonitor.reset();
+////        currentLawnPanel.update(simulationMonitor.getLawn().getWidth(), simulationMonitor.getLawn().getHeight(), simulationMonitor.getInitialLawn());
+//    }
 
     private void updateGUI() {
-
+        currentLawnPanel.update(simulationMonitor.getLawn().getWidth(), simulationMonitor.getLawn().getHeight(), simulationMonitor.getLawn());
+        cutGrassState.setText("Grass Cut: " + (simulationMonitor.getCutGrass()));
+        remainGrassState.setText("Grass Left: " + (simulationMonitor.getTotalGrass() - simulationMonitor.getCutGrass() + simulationMonitor.getTotalCrater()));
+        currentState.setText("Turns Done: " + (simulationMonitor.getInitialTotalTurn() - simulationMonitor.getTotalTurn()));
+        for (int i = 0; i < mowerCount; i++) {
+            mowerTableData[i][1] = mowerList[i].getCurrentStatus().toString();
+            mowerTableData[i][2] = mowerList[i].getCurrentDirection().toString();
+            mowerTableData[i][3] = "";
+            mowerTableData[i][4] = Integer.toString(mowerList[i].getStallTurn());
+        }
+        JTable mowerStatusTable = new JTable(mowerTableData, new String[]{
+                "Mower ID", "Current Status", "Current Direction", "Next Action", "Turns to stall"
+        });
+        mowerStatusPanel.setViewportView(mowerStatusTable);
     }
 
 
@@ -258,12 +249,15 @@ public class MainPanel extends JFrame {
     private JLabel jLabel1;
     private JScrollPane mowerStatusPanel;
     private JScrollPane realTimeLawnPanel;
-    private JButton nextBtn;
+    private JButton nextStepBtn;
     private JButton stopBtn;
-    private JButton resetBtn;
+    private JButton nextTurnBtn;
     private JPanel txtPanel1;
     private JPanel txtPanel2;
     private JPanel txtPanel3;
     // End of variables declaration
     private SimulationMonitor simulationMonitor;
+    private String[][] mowerTableData;
+    private int mowerCount;
+    private LawnMower[] mowerList;
 }
