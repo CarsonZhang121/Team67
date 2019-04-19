@@ -210,14 +210,14 @@ public class MainPanel extends javax.swing.JFrame {
     }
 
     private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        simulationMonitor.runOneTurn();
+        simulationMonitor.nextMove();
         currentLawnPanel.update(simulationMonitor.getLawn().getWidth(), simulationMonitor.getLawn().getHeight(), simulationMonitor.getLawn());
         grassState.setText("# grass cut  " + simulationMonitor.getCutGrass() + "\n   # grass remaining");
     }
 
     private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        simulationMonitor.reset();
-        currentLawnPanel.update(simulationMonitor.getLawn().getWidth(), simulationMonitor.getLawn().getHeight(), simulationMonitor.getInitialLawn());
+//        simulationMonitor.reset();
+//        currentLawnPanel.update(simulationMonitor.getLawn().getWidth(), simulationMonitor.getLawn().getHeight(), simulationMonitor.getInitialLawn());
     }
 
 
