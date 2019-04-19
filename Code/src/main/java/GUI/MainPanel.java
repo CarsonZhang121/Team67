@@ -1,9 +1,9 @@
 
-package Viewer;
-
+package GUI;
 
 import Model.LawnMower;
 import Model.SimulationMonitor;
+import Viewer.*;
 
 import javax.swing.*;
 

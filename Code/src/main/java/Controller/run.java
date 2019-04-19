@@ -1,7 +1,7 @@
 package Controller;
 import Model.InputFile;
 import Model.SimulationMonitor;
-import Viewer.MainPanel;
+import GUI.MainPanel;
 
 public class run {
     public static void main(String[] args){
