@@ -18,6 +18,13 @@ public class LawnMower {
     private HashMap<Direction, Integer> yDIR_MAP;
     private Random randGenerator;
 
+    public Action getCacheAction() {
+        return cacheAction;
+    }
+    public Direction getCurrentDirection() {
+        return currentDirection;
+    }
+
     public LawnMower(Location loc, Direction dir) {
         currentStatus = MowerStatus.active;
         randGenerator = new Random();

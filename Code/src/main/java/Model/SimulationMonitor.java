@@ -15,11 +15,13 @@ public class SimulationMonitor {
     private MowerMap mowerMap;
     private int totalSize;
     private int totalGrass;
+    private int totalCrater;
     private int cutGrass;
     private int stoppedMowers;
     private int crashedMowers; // for debug
     private boolean simulationOn;
     private int totalTurn;
+    private int initialTotalTurn;
     private int stallTurn;
     private double stayPercent;
     private int currentMowerIdx;
@@ -36,6 +38,25 @@ public class SimulationMonitor {
         return lawn;
     }
 
+    public int getTotalGrass() {
+        return totalGrass;
+    }
+
+    public int getStallTurn() {
+        return stallTurn;
+    }
+
+    public int getInitialTotalTurn() {
+        return initialTotalTurn;
+    }
+
+    public int getTotalTurn() {
+        return totalTurn;
+    }
+
+    public int getTotalCrater() {
+        return totalCrater;
+    }
 
     // initialize the simulation.
     public void initialize(InputFile input) {
@@ -51,6 +72,7 @@ public class SimulationMonitor {
         cutGrass = 0;
         totalGrass = totalSize;
         totalTurn = input.getTotalTurn();
+        initialTotalTurn = input.getTotalTurn();
         stallTurn = input.getStallTurn();
         stayPercent = input.getStayPercent();
         stoppedMowers = 0;
@@ -72,6 +94,7 @@ public class SimulationMonitor {
         cutGrass = mowerList.length; // mower always cut the grass at initial location.
 
         Location[] craterLocs = input.getCraterLocations();
+        totalCrater = craterLocs.length;
         for (int i = 0; i < craterLocs.length; i++) {
             lawn.setSquare(craterLocs[i], SquareState.crater);
             totalGrass -= 1;
