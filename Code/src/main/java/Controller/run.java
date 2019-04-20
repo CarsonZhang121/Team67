@@ -43,7 +43,5 @@ public class run {
                 new MainPanel(monitorSim, input).setVisible(true);
             }
         });
-
-        monitorSim.report();
     }
 }
