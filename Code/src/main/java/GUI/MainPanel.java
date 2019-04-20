@@ -212,7 +212,7 @@ public class MainPanel extends JFrame {
         for (int i = 0; i < mowerList.length; i++) {
             mowerList[i].setCurrentStatus(MowerStatus.turnedOff);
         }
-        JOptionPane.showMessageDialog(null, "Simulation Stopped, Reset", "InfoBox: " + "Stopped", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Simulation Stopped, Reset Now", "InfoBox: " + "Stopped", JOptionPane.INFORMATION_MESSAGE);
         this.getContentPane().removeAll();
         this.revalidate();
         this.repaint();
