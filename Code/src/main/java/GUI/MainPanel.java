@@ -274,7 +274,7 @@ public class MainPanel extends JFrame {
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component component = super.prepareRenderer(renderer, row, column);
                 int currentRowIndx = simulationMonitor.getCurrentMowerIdx();
-                System.out.println(currentRowIndx);
+//                System.out.println(currentRowIndx);
                 if (row == currentRowIndx) {
                     component.setBackground(Color.yellow);
                 } else {

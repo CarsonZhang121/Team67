@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aadcd3d7-6471-4d6a-9138-97455cb0b634" name="Default Changelist" comment="">
+    <list default="true" id="5ae8530e-ef92-412f-a21b-0a934269a844" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/1.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controller/run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/MainPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/MainPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Model/SimulationMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/SimulationMonitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Viewer/LawnPanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Viewer/MainPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/run$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/run$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Controller/run.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/run.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/MainPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/MainPanel$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/MainPanel$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/MainPanel$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/MainPanel$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/MainPanel$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/MainPanel$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/MainPanel$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/MainPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/MainPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/1.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/InputFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/InputFile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Model/LawnMower.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/LawnMower.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Model/SimulationMonitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Model/SimulationMonitor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Viewer/LawnPanel$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Viewer/LawnPanel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Viewer/MainPanel$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Viewer/MainPanel$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Viewer/MainPanel$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Viewer/MainPanel.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,47 +33,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Controller/run.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="19" selection-start-line="19" selection-start-column="2" selection-end-line="21" selection-end-column="11" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1705#1837#0" expanded="true" />
-                <element signature="e#1836#1837#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="646">
+              <caret line="44" column="11" selection-start-line="44" selection-start-column="11" selection-end-line="44" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/GUI/MainPanel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="43" selection-start-line="43" selection-end-line="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1281#1461#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Model/SimulationMonitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="371">
-              <caret line="298" selection-start-line="298" selection-end-line="298" />
+            <state relative-caret-position="68">
+              <caret line="233" column="63" selection-start-line="233" selection-start-column="63" selection-end-line="233" selection-end-column="63" />
               <folding>
-                <element signature="e#17506#17538#0" />
+                <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Model/Lawn.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="22" selection-start-line="6" selection-end-line="7" />
             </state>
           </provider>
         </entry>
@@ -77,20 +54,20 @@
     </leaf>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/Model/SimulationMonitor.java" />
         <option value="$PROJECT_DIR$/src/main/java/GUI/MainPanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/Controller/run.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Model/SimulationMonitor.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1028" />
-    <option name="width" value="1539" />
+    <option name="x" value="1273" />
+    <option name="width" value="1294" />
     <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -99,6 +76,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -160,16 +139,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555654442542" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
-    <property name="project.structure.last.edited" value="Problems" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555795842134" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../6310/A3/osmowsis" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -209,16 +183,16 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="aadcd3d7-6471-4d6a-9138-97455cb0b634" name="Default Changelist" comment="" />
-      <created>1555652884521</created>
+      <changelist id="5ae8530e-ef92-412f-a21b-0a934269a844" name="Default Changelist" comment="" />
+      <created>1555781188399</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1555652884521</updated>
+      <updated>1555781188399</updated>
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1028" y="0" width="1539" height="1047" extended-state="0" />
+    <frame x="1273" y="0" width="1294" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Image Layers" />
@@ -226,92 +200,50 @@
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23326571" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24959481" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" weight="0.32932165" />
+      <window_info anchor="bottom" id="Messages" weight="0.46608314" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.13785557" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.09409191" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39824945" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32932165" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.7221007" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Palette" />
       <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Maven" />
       <window_info anchor="right" id="Capture Analysis" />
       <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="right" id="Maven" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/GUI/MainPanel.java</url>
-          <line>236</line>
-          <properties />
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/Model/RealLawn.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/GUI/MainPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="39" column="19" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/GUI/LawnPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2446">
-          <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Model/Lawn.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="22" selection-start-line="6" selection-end-line="7" />
+        <state relative-caret-position="330">
+          <caret line="276" column="51" selection-start-line="276" selection-start-column="37" selection-end-line="276" selection-end-column="51" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Controller/run.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="19" selection-start-line="19" selection-start-column="2" selection-end-line="21" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1705#1837#0" expanded="true" />
-            <element signature="e#1836#1837#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="646">
+          <caret line="44" column="11" selection-start-line="44" selection-start-column="11" selection-end-line="44" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Model/SimulationMonitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="298" selection-start-line="298" selection-end-line="298" />
-          <folding>
-            <element signature="e#17506#17538#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/GUI/MainPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="43" selection-start-line="43" selection-end-line="43" />
+        <state relative-caret-position="68">
+          <caret line="233" column="63" selection-start-line="233" selection-start-column="63" selection-end-line="233" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1281#1461#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -319,79 +251,9 @@
   </component>
   <component name="masterDetails">
     <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>1</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
       <state key="ProjectJDKs.UI">
         <settings>
           <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
           <splitter-proportions>
             <option name="proportions">
               <list>
