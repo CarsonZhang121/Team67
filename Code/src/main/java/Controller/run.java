@@ -5,7 +5,7 @@ import GUI.MainPanel;
 
 public class run {
     public static void main(String[] args){
-        // TODO: 1. read the file to initialize the monitor;
+        // 1. read the file to initialize the monitor;
         final InputFile input = new InputFile();
         final SimulationMonitor monitorSim = new SimulationMonitor();
 
