@@ -1,6 +1,7 @@
 package GUI;
 
 
+import Model.InputFile;
 import Model.LawnMower;
 import Model.SimulationMonitor;
 import Viewer.MowerStatus;
@@ -11,8 +12,11 @@ import java.awt.event.*;
 
 public class MainPanel extends JFrame {
 
-    public MainPanel(SimulationMonitor simulationMonitor) {
+    private InputFile input = null;
+
+    public MainPanel(SimulationMonitor simulationMonitor, InputFile input) {
         this.simulationMonitor = simulationMonitor;
+        this.input = input;
         this.mowerCount = simulationMonitor.getMowerList().length;
         this.mowerTableData = new String[mowerCount][5];
         this.mowerList = simulationMonitor.getMowerList();
@@ -48,7 +52,7 @@ public class MainPanel extends JFrame {
             }
         });
 
-        stopBtn.setText("Stop");
+        stopBtn.setText("Stop & Restart");
         stopBtn.setActionCommand("");
         stopBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -200,6 +204,13 @@ public class MainPanel extends JFrame {
         for (int i = 0; i < mowerList.length; i++) {
             mowerList[i].setCurrentStatus(MowerStatus.turnedOff);
         }
+        this.getContentPane().removeAll();
+        this.revalidate();
+        this.repaint();
+        SimulationMonitor simulationMonitor1 = new SimulationMonitor();
+        simulationMonitor1.initialize(input);
+        MainPanel mainPanel = new MainPanel(simulationMonitor1, input);
+        mainPanel.setVisible(true);
         // TODO: get an alert window to say Simulation stopped?
     }
 
