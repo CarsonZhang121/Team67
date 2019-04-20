@@ -12,11 +12,11 @@ import java.awt.event.*;
 
 public class MainPanel extends JFrame {
 
-    private InputFile input = null;
+    final InputFile cachedInput;
 
     public MainPanel(SimulationMonitor simulationMonitor, InputFile input) {
         this.simulationMonitor = simulationMonitor;
-        this.input = input;
+        this.cachedInput = input;
         this.mowerCount = simulationMonitor.getMowerList().length;
         this.mowerTableData = new String[mowerCount][5];
         this.mowerList = simulationMonitor.getMowerList();
@@ -208,8 +208,8 @@ public class MainPanel extends JFrame {
         this.revalidate();
         this.repaint();
         SimulationMonitor simulationMonitor1 = new SimulationMonitor();
-        simulationMonitor1.initialize(input);
-        MainPanel mainPanel = new MainPanel(simulationMonitor1, input);
+        simulationMonitor1.initialize(cachedInput);
+        MainPanel mainPanel = new MainPanel(simulationMonitor1, cachedInput);
         mainPanel.setVisible(true);
         // TODO: get an alert window to say Simulation stopped?
     }

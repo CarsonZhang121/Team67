@@ -66,8 +66,8 @@ public class SimulationMonitor {
         mowerMap = new MowerMap();
         mowerMap.initializeMap();
         lawn.squares = new SquareState[input.getLawnWidth()][input.getLawnHeight()];
-        mowerLocations = input.getMowerLocations();
-        mowerDirections = input.getMowerInitialDirections();
+        mowerLocations = input.getMowerLocationsCopy();
+        mowerDirections = input.getMowerDirectionsCopy();
         totalSize = input.getLawnWidth() * input.getLawnHeight();
         cutGrass = 0;
         totalGrass = totalSize;
