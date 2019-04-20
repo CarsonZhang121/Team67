@@ -90,6 +90,7 @@ public class SimulationMonitor {
             lawn.setSquare(mowerLocations[i], SquareState.mower);
             mowerMap.setSquare(mowerLocations[i], SquareState.mower, Direction.south); // the last parameter does not matter in this case.
             mowerList[i] = new LawnMower(mowerLocations[i], mowerDirections[i]);
+            mowerList[i].setCachedNextAction(new Action("scan"));
         }
         cutGrass = mowerList.length; // mower always cut the grass at initial location.
 
