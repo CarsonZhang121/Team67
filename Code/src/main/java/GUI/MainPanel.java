@@ -212,7 +212,7 @@ public class MainPanel extends JFrame {
         for (int i = 0; i < mowerList.length; i++) {
             mowerList[i].setCurrentStatus(MowerStatus.turnedOff);
         }
-        JOptionPane.showMessageDialog(null, "Simulation Stopped, Reset", "InfoBox: " + "Stopped", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Simulation Stopped, Reset Now", "InfoBox: " + "Stopped", JOptionPane.INFORMATION_MESSAGE);
         this.getContentPane().removeAll();
         this.revalidate();
         this.repaint();
@@ -242,7 +242,7 @@ public class MainPanel extends JFrame {
     private void updateGUI() {
         currentLawnPanel.update(simulationMonitor.getLawn().getWidth(), simulationMonitor.getLawn().getHeight(), simulationMonitor.getLawn());
         cutGrassState.setText("Grass Cut: " + (simulationMonitor.getCutGrass()));
-        remainGrassState.setText("Grass Left: " + (simulationMonitor.getTotalGrass() - simulationMonitor.getCutGrass() + simulationMonitor.getTotalCrater()));
+        remainGrassState.setText("Grass Left: " + (simulationMonitor.getTotalGrass() - simulationMonitor.getCutGrass()));
         currentState.setText("Turns Done: " + (simulationMonitor.getInitialTotalTurn() - simulationMonitor.getTotalTurn()));
         for (int i = 0; i < mowerCount; i++) {
             mowerTableData[i][1] = mowerList[i].getCurrentStatus().toString();
