@@ -230,7 +230,8 @@ public class MainPanel extends JFrame {
             mowerTableData[i][2] = mowerList[i].getCurrentDirection().toString();
             if (mowerList[i].getCurrentStatus().toString().equals("turnedOff")){
                 mowerTableData[i][3] = "turn off";
-            } else if (mowerList[i].getCurrentStatus().toString().equals("stalled")){
+            } else if (mowerList[i].getCurrentStatus().toString().equals("stalled") ||
+                    simulationMonitor.getLawn().getSquareState(mowerList[i].getCurrentLoc()).toString().equals("puppy_mower")){
                 mowerTableData[i][3] = "stalled";
             } else if ( mowerList[i].getCachedNextAction() == null){
                 mowerTableData[i][3] = "scan";

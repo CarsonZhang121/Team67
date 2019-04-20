@@ -26,6 +26,9 @@ public class LawnMower {
     public Direction getCurrentDirection() {
         return currentDirection;
     }
+    public Location getCurrentLoc() {
+        return currentLoc;
+    }
 
     public void setCachedNextAction(Action a) {
         this.cachedNextAction = a;
