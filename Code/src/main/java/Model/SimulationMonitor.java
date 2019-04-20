@@ -24,6 +24,11 @@ public class SimulationMonitor {
     private int initialTotalTurn;
     private int stallTurn;
     private double stayPercent;
+
+    public int getCurrentMowerIdx() {
+        return currentMowerIdx;
+    }
+
     private int currentMowerIdx;
     private int currentPuppyIdx;
 
