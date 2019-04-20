@@ -1,12 +1,12 @@
 package Controller;
 import Model.InputFile;
 import Model.SimulationMonitor;
-import Viewer.MainPanel;
+import GUI.MainPanel;
 
 public class run {
     public static void main(String[] args){
         // TODO: 1. read the file to initialize the monitor;
-        InputFile input = new InputFile();
+        final InputFile input = new InputFile();
         final SimulationMonitor monitorSim = new SimulationMonitor();
 
         if (args.length == 0) {
@@ -18,7 +18,7 @@ public class run {
         monitorSim.initialize(input);
 
 //        while (monitorSim.issimulationOn()) {
-//            monitorSim.runOneTurn();
+//            monitorSim.nextMove();
 //        }
 
         try {
@@ -40,7 +40,7 @@ public class run {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainPanel(monitorSim).setVisible(true);
+                new MainPanel(monitorSim, input).setVisible(true);
             }
         });
 
