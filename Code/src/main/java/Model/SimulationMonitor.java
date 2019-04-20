@@ -24,6 +24,11 @@ public class SimulationMonitor {
     private int initialTotalTurn;
     private int stallTurn;
     private double stayPercent;
+
+    public int getCurrentMowerIdx() {
+        return currentMowerIdx;
+    }
+
     private int currentMowerIdx;
     private int currentPuppyIdx;
 
@@ -66,8 +71,8 @@ public class SimulationMonitor {
         mowerMap = new MowerMap();
         mowerMap.initializeMap();
         lawn.squares = new SquareState[input.getLawnWidth()][input.getLawnHeight()];
-        mowerLocations = input.getMowerLocations();
-        mowerDirections = input.getMowerInitialDirections();
+        mowerLocations = input.getMowerLocationsCopy();
+        mowerDirections = input.getMowerDirectionsCopy();
         totalSize = input.getLawnWidth() * input.getLawnHeight();
         cutGrass = 0;
         totalGrass = totalSize;
@@ -90,6 +95,7 @@ public class SimulationMonitor {
             lawn.setSquare(mowerLocations[i], SquareState.mower);
             mowerMap.setSquare(mowerLocations[i], SquareState.mower, Direction.south); // the last parameter does not matter in this case.
             mowerList[i] = new LawnMower(mowerLocations[i], mowerDirections[i]);
+            mowerList[i].setCachedNextAction(new Action("scan"));
         }
         cutGrass = mowerList.length; // mower always cut the grass at initial location.
 
@@ -330,6 +336,7 @@ public class SimulationMonitor {
             System.out.print("Mower at Location: ");
             System.out.println(String.format("(%d, %d)", mowerLocations[currentMowerIdx].getX(), mowerLocations[currentMowerIdx].getY()));
             Action act = mowerList[currentMowerIdx].nextAction(mowerMap);
+            mowerList[currentMowerIdx].setCachedNextAction(act);
             System.out.println(String.format("Action: %s", act.getName()));
             if (act.getName().equals("move")) {
                 moveMower(currentMowerIdx, act);

@@ -1,18 +1,24 @@
 package GUI;
 
 
+import Model.InputFile;
 import Model.LawnMower;
 import Model.SimulationMonitor;
 import Viewer.MowerStatus;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
 
 public class MainPanel extends JFrame {
 
-    public MainPanel(SimulationMonitor simulationMonitor) {
+    final InputFile cachedInput;
+
+    public MainPanel(SimulationMonitor simulationMonitor, InputFile input) {
         this.simulationMonitor = simulationMonitor;
+        this.cachedInput = input;
         this.mowerCount = simulationMonitor.getMowerList().length;
         this.mowerTableData = new String[mowerCount][5];
         this.mowerList = simulationMonitor.getMowerList();
@@ -48,7 +54,7 @@ public class MainPanel extends JFrame {
             }
         });
 
-        stopBtn.setText("Stop");
+        stopBtn.setText("Stop & Restart");
         stopBtn.setActionCommand("");
         stopBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -128,7 +134,13 @@ public class MainPanel extends JFrame {
             mowerTableData[i][3] = "Turned Off";
             mowerTableData[i][4] = Integer.toString(mowerList[i].getStallTurn());
         }
-        JTable mowerStatusTable = new JTable(mowerTableData, columnNames);
+        DefaultTableModel model = new DefaultTableModel(mowerTableData, columnNames) {
+            public Class getColumnClass(int column) {
+                return getValueAt(0, column).getClass();
+            }
+        };
+
+        JTable mowerStatusTable = new JTable(model);
         mowerStatusPanel.setViewportView(mowerStatusTable);
 
 
@@ -200,7 +212,14 @@ public class MainPanel extends JFrame {
         for (int i = 0; i < mowerList.length; i++) {
             mowerList[i].setCurrentStatus(MowerStatus.turnedOff);
         }
-        // TODO: get an alert window to say Simulation stopped?
+        JOptionPane.showMessageDialog(null, "Simulation Stopped, Reset", "InfoBox: " + "Stopped", JOptionPane.INFORMATION_MESSAGE);
+        this.getContentPane().removeAll();
+        this.revalidate();
+        this.repaint();
+        SimulationMonitor simulationMonitor1 = new SimulationMonitor();
+        simulationMonitor1.initialize(cachedInput);
+        MainPanel mainPanel = new MainPanel(simulationMonitor1, cachedInput);
+        mainPanel.setVisible(true);
     }
 
     private void forwardBtnActionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,12 +247,43 @@ public class MainPanel extends JFrame {
         for (int i = 0; i < mowerCount; i++) {
             mowerTableData[i][1] = mowerList[i].getCurrentStatus().toString();
             mowerTableData[i][2] = mowerList[i].getCurrentDirection().toString();
-            mowerTableData[i][3] = "";
+            if (mowerList[i].getCurrentStatus().toString().equals("turnedOff")){
+                mowerTableData[i][3] = "turn off";
+            } else if (mowerList[i].getCurrentStatus().toString().equals("stalled") ||
+                    simulationMonitor.getLawn().getSquareState(mowerList[i].getCurrentLoc()).toString().equals("puppy_mower")){
+                mowerTableData[i][3] = "stalled";
+            } else if ( mowerList[i].getCachedNextAction() == null){
+                mowerTableData[i][3] = "scan";
+            } else {
+                mowerTableData[i][3] = mowerList[i].getCachedNextAction().getName();
+            }
+
             mowerTableData[i][4] = Integer.toString(mowerList[i].getStallTurn());
         }
-        JTable mowerStatusTable = new JTable(mowerTableData, new String[]{
-                "Mower ID", "Current Status", "Current Direction", "Next Action", "Turns to stall"
-        });
+        String[] columnNames = new String[]{
+                "Mower ID", "Status", "Direction", "Next Action", "Turns to stall"
+        };
+
+        DefaultTableModel model = new DefaultTableModel(mowerTableData, columnNames);
+
+        JTable mowerStatusTable = new JTable(model);
+
+
+        mowerStatusTable = new JTable(model) {
+
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component component = super.prepareRenderer(renderer, row, column);
+                int currentRowIndx = simulationMonitor.getCurrentMowerIdx();
+                System.out.println(currentRowIndx);
+                if (row == currentRowIndx) {
+                    component.setBackground(Color.yellow);
+                } else {
+                    component.setBackground(Color.white);
+                }
+
+                return component;
+            }
+        };
         mowerStatusPanel.setViewportView(mowerStatusTable);
     }
 

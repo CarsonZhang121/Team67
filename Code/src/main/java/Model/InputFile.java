@@ -109,5 +109,13 @@ public class InputFile {
     public double getStayPercent() { return stayPercent; }
 
     public int getTotalTurn() { return totalTurn; }
+
+    public Location[] getMowerLocationsCopy(){
+        return mowerLocations.clone();
+    }
+
+    public Direction[] getMowerDirectionsCopy(){
+        return mowerInitialDirections.clone();
+    }
 }
 
