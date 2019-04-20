@@ -228,7 +228,16 @@ public class MainPanel extends JFrame {
         for (int i = 0; i < mowerCount; i++) {
             mowerTableData[i][1] = mowerList[i].getCurrentStatus().toString();
             mowerTableData[i][2] = mowerList[i].getCurrentDirection().toString();
-            mowerTableData[i][3] = "";
+            if (mowerList[i].getCurrentStatus().toString().equals("turnedOff")){
+                mowerTableData[i][3] = "turn off";
+            } else if (mowerList[i].getCurrentStatus().toString().equals("stalled")){
+                mowerTableData[i][3] = "stalled";
+            } else if ( mowerList[i].getCachedNextAction() == null){
+                mowerTableData[i][3] = "scan";
+            } else {
+                mowerTableData[i][3] = mowerList[i].getCachedNextAction().getName();
+            }
+
             mowerTableData[i][4] = Integer.toString(mowerList[i].getStallTurn());
         }
         JTable mowerStatusTable = new JTable(mowerTableData, new String[]{

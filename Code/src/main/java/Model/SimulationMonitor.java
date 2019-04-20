@@ -330,6 +330,7 @@ public class SimulationMonitor {
             System.out.print("Mower at Location: ");
             System.out.println(String.format("(%d, %d)", mowerLocations[currentMowerIdx].getX(), mowerLocations[currentMowerIdx].getY()));
             Action act = mowerList[currentMowerIdx].nextAction(mowerMap);
+            mowerList[currentMowerIdx].setCachedNextAction(act);
             System.out.println(String.format("Action: %s", act.getName()));
             if (act.getName().equals("move")) {
                 moveMower(currentMowerIdx, act);

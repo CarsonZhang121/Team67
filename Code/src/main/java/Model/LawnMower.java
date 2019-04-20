@@ -17,12 +17,18 @@ public class LawnMower {
     private HashMap<Direction, Integer> xDIR_MAP;
     private HashMap<Direction, Integer> yDIR_MAP;
     private Random randGenerator;
+    private Action cachedNextAction;
 
     public Action getCacheAction() {
         return cacheAction;
     }
+    public Action getCachedNextAction() {return cachedNextAction;}
     public Direction getCurrentDirection() {
         return currentDirection;
+    }
+
+    public void setCachedNextAction(Action a) {
+        this.cachedNextAction = a;
     }
 
     public LawnMower(Location loc, Direction dir) {
