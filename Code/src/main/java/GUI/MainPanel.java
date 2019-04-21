@@ -12,9 +12,12 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MainPanel extends JFrame {
+public class MainPanel extends JFrame implements Runnable{
 
     final InputFile cachedInput;
+
+    Thread animatorThread;
+    int delay = 1000 / 60;
 
     public MainPanel(SimulationMonitor simulationMonitor, InputFile input) {
         this.simulationMonitor = simulationMonitor;
@@ -223,15 +226,32 @@ public class MainPanel extends JFrame {
     }
 
     private void forwardBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        while (simulationMonitor.issimulationOn()) {
+/*        while (simulationMonitor.issimulationOn()) {
             simulationMonitor.nextMove();
             updateGUI();
+        }*/
+        if (animatorThread == null){
+            animatorThread = new Thread(this);
         }
+        animatorThread.start();
     }
 
     private void nextStepBtnActionPerformed(java.awt.event.ActionEvent evt) {
         simulationMonitor.nextMove();
         updateGUI();
+    }
+
+    public void run(){
+        Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+        while (Thread.currentThread() == animatorThread && simulationMonitor.issimulationOn()){
+            simulationMonitor.nextMove();
+            updateGUI();
+            try{
+                Thread.sleep(delay);
+            } catch (InterruptedException ex){
+                break;
+            }
+        }
     }
 
 //    private void nextTurnBtnActionPerformed(java.awt.event.ActionEvent evt) {
