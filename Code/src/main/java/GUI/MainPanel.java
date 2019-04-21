@@ -211,18 +211,7 @@ public class MainPanel extends JFrame implements Runnable{
     }
 
     private void stopBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        LawnMower[] mowerList = simulationMonitor.getMowerList();
-        for (int i = 0; i < mowerList.length; i++) {
-            mowerList[i].setCurrentStatus(MowerStatus.turnedOff);
-        }
-        JOptionPane.showMessageDialog(null, "Simulation Stopped, Reset Now", "InfoBox: " + "Stopped", JOptionPane.INFORMATION_MESSAGE);
-        this.getContentPane().removeAll();
-        this.revalidate();
-        this.repaint();
-        SimulationMonitor simulationMonitor1 = new SimulationMonitor();
-        simulationMonitor1.initialize(cachedInput);
-        MainPanel mainPanel = new MainPanel(simulationMonitor1, cachedInput);
-        mainPanel.setVisible(true);
+        stopSimulation();
     }
 
     private void forwardBtnActionPerformed(java.awt.event.ActionEvent evt) {
@@ -237,8 +226,12 @@ public class MainPanel extends JFrame implements Runnable{
     }
 
     private void nextStepBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        simulationMonitor.nextMove();
-        updateGUI();
+        if (simulationMonitor.issimulationOn()){
+            simulationMonitor.nextMove();
+            updateGUI();
+        } else {
+            stopSimulation();
+        }
     }
 
     public void run(){
@@ -252,6 +245,7 @@ public class MainPanel extends JFrame implements Runnable{
                 break;
             }
         }
+        stopSimulation();
     }
 
 //    private void nextTurnBtnActionPerformed(java.awt.event.ActionEvent evt) {
@@ -307,6 +301,21 @@ public class MainPanel extends JFrame implements Runnable{
         mowerStatusPanel.setViewportView(mowerStatusTable);
     }
 
+    private void stopSimulation(){
+        LawnMower[] mowerList = simulationMonitor.getMowerList();
+        for (int i = 0; i < mowerList.length; i++) {
+            mowerList[i].setCurrentStatus(MowerStatus.turnedOff);
+        }
+        updateGUI();
+        JOptionPane.showMessageDialog(null, "Simulation Stopped, Reset Now", "InfoBox: " + "Stopped", JOptionPane.INFORMATION_MESSAGE);
+        this.getContentPane().removeAll();
+        this.revalidate();
+        this.repaint();
+        SimulationMonitor simulationMonitor1 = new SimulationMonitor();
+        simulationMonitor1.initialize(cachedInput);
+        MainPanel mainPanel = new MainPanel(simulationMonitor1, cachedInput);
+        mainPanel.setVisible(true);
+    }
 
     // Variables declaration - do not modify
     private JPanel btnPanel;
