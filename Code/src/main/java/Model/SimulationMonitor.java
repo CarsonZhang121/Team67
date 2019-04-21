@@ -261,7 +261,7 @@ public class SimulationMonitor {
     }
 
     public void nextMove() {
-        if (totalTurn == 0) {
+        if (totalTurn == 0 || totalGrass == cutGrass) {
             simulationOn = false;
             report();
             return;
